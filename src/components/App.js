@@ -1,17 +1,23 @@
 import React, { Component } from 'react';
+import Posts from './Posts'
+import {
+  Container, Grid, Header
+} from 'semantic-ui-react'
+
 //import './App.css';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <div className="App-header">
-
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <div>
+        <Container text>
+          <Header
+            as='h1'
+            content='These are Posts'
+            textAlign='center'
+          />
+          <Posts />
+        </Container>
       </div>
     );
   }
