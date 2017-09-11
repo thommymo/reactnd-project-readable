@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Posts from './Posts'
 import {
-  Container, Grid, Header
+  Container, Header
 } from 'semantic-ui-react'
 
 //import './App.css';
