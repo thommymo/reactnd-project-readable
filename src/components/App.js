@@ -11,11 +11,6 @@ class App extends Component {
     return (
       <div>
         <Container text>
-          <Header
-            as='h1'
-            content='These are Posts'
-            textAlign='center'
-          />
           <Posts />
         </Container>
       </div>
