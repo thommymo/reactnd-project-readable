@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Grid, Menu, Segment, Dropdown, Button, Container } from 'semantic-ui-react'
+import { Grid, Menu, Button, Container } from 'semantic-ui-react'
 import Post from './Post'
 
 class Posts extends Component {
@@ -17,7 +17,7 @@ class Posts extends Component {
           </Grid.Column>
           <Grid.Column width={4}>
             <Container textAlign='right'>
-              <Button.Group  size='mini' position="right">
+              <Button.Group  size='mini'>
                 <Button size='mini'>Date</Button>
                 <Button.Or text='or' size='mini'/>
                 <Button positive  size='mini'>Votes</Button>

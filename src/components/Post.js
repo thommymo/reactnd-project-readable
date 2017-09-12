@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Grid, Divider, Header, Label, Container
+  Grid, Header, Label, Container
 } from 'semantic-ui-react'
 //import './App.css';
 
