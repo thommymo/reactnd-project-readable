@@ -4,12 +4,16 @@ import { connect } from 'react-redux'
 import Post from './Post'
 
 class Posts extends Component {
-  state = { activeItem: 'all categories' }
+  state = {
+    activeCategoryItem: 'all categories',
+    activeOrderByItem: 'voteScore'
+  }
 
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+  handleCategoryItemClick = (e, { name }) => this.setState({ activeCategoryItem: name })
+  handleOrderByItemClick = (e, { name }) => this.setState({ activeOrderByItem: name })
 
   render() {
-    const { activeItem } = this.state
+    const { activeCategoryItem, activeOrderByItem } = this.state
     return (
       <Grid padded>
         <Grid.Row>
@@ -19,9 +23,9 @@ class Posts extends Component {
           <Grid.Column width={4}>
             <Container textAlign='right'>
               <Button.Group  size='mini'>
-                <Button size='mini'>Date</Button>
+                <Button name='date' positive={activeOrderByItem === "date"} onClick={this.handleOrderByItemClick} size='mini'>Date</Button>
                 <Button.Or text='or' size='mini'/>
-                <Button positive  size='mini'>Votes</Button>
+                <Button name='voteScore' positive={activeOrderByItem === "voteScore"} onClick={this.handleOrderByItemClick} size='mini'>Votes</Button>
               </Button.Group>
             </Container>
           </Grid.Column>
@@ -43,9 +47,9 @@ class Posts extends Component {
 
           <Grid.Column width={4}>
             <Menu fluid vertical tabular='right'>
-              <Menu.Item name='all categories' active={activeItem === "all categories"} onClick={this.handleItemClick} />
+              <Menu.Item name='all categories' active={activeCategoryItem === "all categories"} onClick={this.handleCategoryItemClick} />
               { this.props.categories.items.map((category) => (
-                <Menu.Item key={category.name} name={category.name} active={activeItem === category.name} onClick={this.handleItemClick} />
+                <Menu.Item key={category.name} name={category.name} active={activeCategoryItem === category.name} onClick={this.handleCategoryItemClick} />
               ))
               }
             </Menu>
