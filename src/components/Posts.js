@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Grid, Menu, Button, Container } from 'semantic-ui-react'
+import { connect } from 'react-redux'
 import Post from './Post'
 
 class Posts extends Component {
@@ -37,10 +38,11 @@ class Posts extends Component {
 
           <Grid.Column width={4}>
             <Menu fluid vertical tabular='right'>
-              <Menu.Item name='all categories' active={activeItem === 'all categories'} onClick={this.handleItemClick} />
-              <Menu.Item name='pics' active={activeItem === 'pics'} onClick={this.handleItemClick} />
-              <Menu.Item name='companies' active={activeItem === 'companies'} onClick={this.handleItemClick} />
-              <Menu.Item name='links' active={activeItem === 'links'} onClick={this.handleItemClick} />
+              <Menu.Item name='all categories' active={activeItem === "all categories"} onClick={this.handleItemClick} />
+              { this.props.categories.items.map((category) => (
+                <Menu.Item key={category.name} name={category.name} active={activeItem === category.name} onClick={this.handleItemClick} />
+              ))
+              }
             </Menu>
           </Grid.Column>
         </Grid.Row>
@@ -53,4 +55,8 @@ class Posts extends Component {
   }
 }
 
-export default Posts;
+function mapStateToProps (store) {
+  return {categories: store.categories}
+}
+
+export default connect(mapStateToProps)(Posts);
