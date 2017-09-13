@@ -3,6 +3,8 @@ import { combineReducers } from 'redux'
 import {
   ADD_POST,
   ADD_COMMENT_TO_POST,
+  REQUEST_POSTS,
+  RECEIVE_POSTS,
   REQUEST_CATEGORIES,
   RECEIVE_CATEGORIES
 } from '../actions'
@@ -28,14 +30,22 @@ function categories (state = initialCategoriesState, action) {
   }
 }
 
-function posts (state = {}, action) {
+const initialPostsState = {
+  isFetching: false,
+  items: []
+}
+
+function posts (state = initialPostsState, action) {
   switch(action.type){
-    case ADD_POST:
-      //TODO: Add the correct return state for adding a post
-      return state
-    case ADD_COMMENT_TO_POST:
-      //TODO: Add the correct return state for adding a comment
-      return state
+    case REQUEST_POSTS:
+      return Object.assign({}, state, {
+        isFetching: true
+      })
+    case RECEIVE_POSTS:
+      return Object.assign({}, state, {
+        isFetching: false,
+        items: action.posts
+      })
     default:
       return state
   }

@@ -6,20 +6,26 @@ import {
 
 class Post extends Component {
   render() {
+    
+    const date = new Date(this.props.post.timestamp)
+    const timestamp = new Intl.DateTimeFormat().format(date)
+
     return (
+
       <div className="Posts">
         <Container>
           <Grid>
             <Grid.Row>
               <Grid.Column width={11}>
-                <Header as="h2">Post.Title</Header>
+                <Header as="h2">{this.props.post.title}</Header>
               </Grid.Column>
               <Grid.Column width={5}>
                 <Container textAlign="right">
                   <Label color='blue' image>
                     VoteScore
                     <Label.Detail>
-                      XX
+
+                      {this.props.post.voteScore}
                     </Label.Detail>
                   </Label>
                 </Container>
@@ -28,13 +34,17 @@ class Post extends Component {
             <Grid.Row>
               <Grid.Column width={16}>
                 <Label color='grey' image>
-                  Post.Author
-                  <Label.Detail>Post.Date</Label.Detail>
+                  {this.props.post.author}
+                  <Label.Detail>
+
+
+                    {timestamp}
+                  </Label.Detail>
                 </Label>
               </Grid.Column>
             </Grid.Row>
             <Grid.Row>
-              <Grid.Column width={16}>Post.Body.Excerpt()</Grid.Column>
+              <Grid.Column width={16}>{this.props.post.body}</Grid.Column>
             </Grid.Row>
           </Grid>
         </Container>
@@ -43,4 +53,6 @@ class Post extends Component {
   }
 }
 
-export default Post;
+
+
+export default (Post);

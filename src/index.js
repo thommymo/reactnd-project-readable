@@ -8,7 +8,7 @@ import { Provider } from 'react-redux'
 import { createLogger }  from 'redux-logger'
 import 'semantic-ui-css/semantic.min.css'
 import thunkMiddleware from 'redux-thunk'
-import { fetchCategories } from './actions'
+
 
 const logger = createLogger()
 
@@ -20,8 +20,8 @@ const store = createStore(
   )
 )
 
-//This gets initial category Data from the API, I'm not sure at all if this call should be placed here
-store.dispatch(fetchCategories())
+
+
 
 
   /*store

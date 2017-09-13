@@ -1,5 +1,7 @@
 export const ADD_POST = 'ADD_POST'
 export const ADD_COMMENT_TO_POST = 'ADD_COMMENT_TO_POST'
+export const REQUEST_POSTS = 'REQUEST_POSTS'
+export const RECEIVE_POSTS = 'RECEIVE_POSTS'
 export const REQUEST_CATEGORIES = 'REQUEST_CATEGORIES'
 export const RECEIVE_CATEGORIES = 'RECEIVE_CATEGORIES'
 
@@ -16,6 +18,16 @@ export function receiveCategories(json){
     type: RECEIVE_CATEGORIES,
     categories: json.categories
   }
+}
+
+const api = process.env.REACT_APP_CONTACTS_API_URL || 'http://localhost:3001'
+let token = localStorage.token
+if (!token)
+ token = localStorage.token = Math.random().toString(36).substr(-8)
+
+const headers = {
+ 'Accept': 'application/json',
+ 'Authorization': token
 }
 
 //TODO: Here another action would be required: What happens, when there is an error when requesting or receiveing categories: http://redux.js.org/docs/advanced/AsyncActions.htmls
@@ -41,15 +53,7 @@ export function fetchCategories() {
 
     dispatch(requestCategories())
 
-    const api = process.env.REACT_APP_CONTACTS_API_URL || 'http://localhost:3001'
-    let token = localStorage.token
-    if (!token)
-     token = localStorage.token = Math.random().toString(36).substr(-8)
 
-    const headers = {
-     'Accept': 'application/json',
-     'Authorization': token
-    }
     // The function called by the thunk middleware can return a value,
     // that is passed on as the return value of the dispatch method.
 
@@ -76,6 +80,34 @@ export function fetchCategories() {
 
 // END COPIED FROM HERE: http://redux.js.org/docs/advanced/AsyncActions.html
 
+export function requestPosts(){
+  return {
+    type: REQUEST_POSTS
+  }
+}
+
+export function receivePosts(json){
+  //console.log(json)
+  return {
+    type: RECEIVE_POSTS,
+    posts: json
+  }
+}
+
+
+export function fetchPosts() {
+  return function (dispatch) {
+  dispatch(requestPosts())
+    fetch(`${api}/posts`, { method: 'GET', headers })
+      .then(
+        response => response.json(),
+        error => console.log('An error occured.', error)
+      )
+      .then(json =>
+        dispatch(receivePosts(json))
+      )
+  }
+}
 
 export function addPost({title, author, content}){
   return {

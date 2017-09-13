@@ -2,26 +2,33 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Posts from './Posts'
 import {
-  Container, Button
+  Container
 } from 'semantic-ui-react'
+import { fetchCategories, fetchPosts } from '../actions'
 
 
 class App extends Component {
+
+  componentDidMount() {
+    const { dispatch } = this.props
+    dispatch(fetchCategories())
+    dispatch(fetchPosts())
+
+  }
 
   render() {
     return (
       <div>
         <Container text>
           <Posts />
-          <Button onClick={this.props.addCategory}>Test</Button>
         </Container>
       </div>
     );
   }
 }
 
-function mapStateToProps (store) {
-  return store
+function mapStateToProps (state) {
+  return state
 }
 
 export default connect(mapStateToProps)(App);

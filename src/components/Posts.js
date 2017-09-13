@@ -31,9 +31,14 @@ class Posts extends Component {
         <Grid.Row>
 
           <Grid.Column width={12}>
-            <Post />
-            <Post />
-            <Post />
+            { this.props.posts.items.map((post) => (
+              <Post
+                key={post.id}
+                post={post}
+              />
+            ))
+            }
+
           </Grid.Column>
 
           <Grid.Column width={4}>
@@ -56,7 +61,7 @@ class Posts extends Component {
 }
 
 function mapStateToProps (store) {
-  return {categories: store.categories}
+  return {categories: store.categories, posts: store.posts}
 }
 
 export default connect(mapStateToProps)(Posts);
