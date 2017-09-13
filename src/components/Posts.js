@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Grid, Menu, Button, Container } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import Post from './Post'
+import { sortPosts } from '../actions'
 
 class Posts extends Component {
   state = {
@@ -10,7 +11,11 @@ class Posts extends Component {
   }
 
   handleCategoryItemClick = (e, { name }) => this.setState({ activeCategoryItem: name })
-  handleOrderByItemClick = (e, { name }) => this.setState({ activeOrderByItem: name })
+
+  handleOrderByItemClick = (e, { name }) => {
+    this.props.dispatch(sortPosts(name))
+    this.setState({ activeOrderByItem: name })
+  }
 
   render() {
     const { activeCategoryItem, activeOrderByItem } = this.state
@@ -23,7 +28,7 @@ class Posts extends Component {
           <Grid.Column width={4}>
             <Container textAlign='right'>
               <Button.Group  size='mini'>
-                <Button name='date' positive={activeOrderByItem === "date"} onClick={this.handleOrderByItemClick} size='mini'>Date</Button>
+                <Button name='timestamp' positive={activeOrderByItem === "timestamp"} onClick={this.handleOrderByItemClick} size='mini'>Date</Button>
                 <Button.Or text='or' size='mini'/>
                 <Button name='voteScore' positive={activeOrderByItem === "voteScore"} onClick={this.handleOrderByItemClick} size='mini'>Votes</Button>
               </Button.Group>
@@ -65,7 +70,7 @@ class Posts extends Component {
 }
 
 function mapStateToProps (store) {
-  return {categories: store.categories, posts: store.posts}
+  return {categories: store.categories, posts: store.posts, dispatch: store.dispatch }
 }
 
 export default connect(mapStateToProps)(Posts);

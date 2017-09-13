@@ -1,5 +1,6 @@
 export const ADD_POST = 'ADD_POST'
 export const ADD_COMMENT_TO_POST = 'ADD_COMMENT_TO_POST'
+export const SORT_POSTS = 'SORT_POSTS'
 export const REQUEST_POSTS = 'REQUEST_POSTS'
 export const RECEIVE_POSTS = 'RECEIVE_POSTS'
 export const REQUEST_CATEGORIES = 'REQUEST_CATEGORIES'
@@ -126,5 +127,13 @@ export function addCommentToPost({post, author, content}){
     content
   }
 }
+
+export function sortPosts(sortCriteria){
+  return {
+    type: SORT_POSTS,
+    sortCriteria: sortCriteria
+  }
+}
+
 
 // TODO: Add all other actions

@@ -4,7 +4,7 @@ import Posts from './Posts'
 import {
   Container
 } from 'semantic-ui-react'
-import { fetchCategories, fetchPosts } from '../actions'
+import { fetchCategories, fetchPosts, sortPost } from '../actions'
 
 
 class App extends Component {
@@ -13,7 +13,6 @@ class App extends Component {
     const { dispatch } = this.props
     dispatch(fetchCategories())
     dispatch(fetchPosts())
-
   }
 
   render() {

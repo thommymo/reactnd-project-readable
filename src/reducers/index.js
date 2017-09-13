@@ -5,6 +5,7 @@ import {
   ADD_COMMENT_TO_POST,
   REQUEST_POSTS,
   RECEIVE_POSTS,
+  SORT_POSTS,
   REQUEST_CATEGORIES,
   RECEIVE_CATEGORIES
 } from '../actions'
@@ -32,6 +33,7 @@ function categories (state = initialCategoriesState, action) {
 
 const initialPostsState = {
   isFetching: false,
+  sortValue: 'voteScore',
   items: []
 }
 
@@ -44,7 +46,13 @@ function posts (state = initialPostsState, action) {
     case RECEIVE_POSTS:
       return Object.assign({}, state, {
         isFetching: false,
-        items: action.posts
+        items: action.posts.sort((a, b) => (a[state.sortValue]-b[state.sortValue]))
+
+      })
+    case SORT_POSTS:
+      return Object.assign({}, state, {
+        sortValue: action.sortCriteria,
+        items: state.items.sort((a, b) => (a[action.sortCriteria]-b[action.sortCriteria]))
       })
     default:
       return state
