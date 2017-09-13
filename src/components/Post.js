@@ -6,12 +6,13 @@ import {
 
 class Post extends Component {
   render() {
-    
+    //Check if timestamp generates a real date
+    let formattedDate = 0
     const date = new Date(this.props.post.timestamp)
-    const timestamp = new Intl.DateTimeFormat().format(date)
+    if(Object.prototype.toString.call(date) && isFinite(date))
+      formattedDate = new Intl.DateTimeFormat().format(date)
 
     return (
-
       <div className="Posts">
         <Container>
           <Grid>
@@ -24,7 +25,6 @@ class Post extends Component {
                   <Label color='blue' image>
                     VoteScore
                     <Label.Detail>
-
                       {this.props.post.voteScore}
                     </Label.Detail>
                   </Label>
@@ -36,9 +36,7 @@ class Post extends Component {
                 <Label color='grey' image>
                   {this.props.post.author}
                   <Label.Detail>
-
-
-                    {timestamp}
+                    {formattedDate}
                   </Label.Detail>
                 </Label>
               </Grid.Column>
@@ -52,7 +50,5 @@ class Post extends Component {
     );
   }
 }
-
-
 
 export default (Post);
