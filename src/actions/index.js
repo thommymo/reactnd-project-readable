@@ -128,10 +128,11 @@ export function addCommentToPost({post, author, content}){
   }
 }
 
-export function sortPosts(sortCriteria){
+export function sortPosts(sortValue, sortOrder){
   return {
     type: SORT_POSTS,
-    sortCriteria: sortCriteria
+    sortValue: sortValue,
+    sortOrder: sortOrder
   }
 }
 

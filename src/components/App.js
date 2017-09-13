@@ -4,7 +4,7 @@ import Posts from './Posts'
 import {
   Container
 } from 'semantic-ui-react'
-import { fetchCategories, fetchPosts, sortPost } from '../actions'
+import { fetchCategories, fetchPosts } from '../actions'
 
 
 class App extends Component {

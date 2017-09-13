@@ -7,30 +7,29 @@ import { sortPosts } from '../actions'
 class Posts extends Component {
   state = {
     activeCategoryItem: 'all categories',
-    activeOrderByItem: 'voteScore'
   }
 
   handleCategoryItemClick = (e, { name }) => this.setState({ activeCategoryItem: name })
 
   handleOrderByItemClick = (e, { name }) => {
     this.props.dispatch(sortPosts(name))
-    this.setState({ activeOrderByItem: name })
   }
 
   render() {
+    const { sortValue, sortOrder } = this.props.posts
     const { activeCategoryItem, activeOrderByItem } = this.state
     return (
       <Grid padded>
         <Grid.Row>
-          <Grid.Column width={8}>
+          <Grid.Column width={7}>
             <Button icon='plus' content='New Post' color='blue'/>
           </Grid.Column>
-          <Grid.Column width={4}>
+          <Grid.Column width={5}>
             <Container textAlign='right'>
-              <Button.Group  size='mini'>
-                <Button name='timestamp' positive={activeOrderByItem === "timestamp"} onClick={this.handleOrderByItemClick} size='mini'>Date</Button>
+              <Button.Group>
+                <Button icon="sort numeric ascending" name='timestamp' positive={sortValue === "timestamp"} onClick={this.handleOrderByItemClick} size='mini' content='Date' />
                 <Button.Or text='or' size='mini'/>
-                <Button name='voteScore' positive={activeOrderByItem === "voteScore"} onClick={this.handleOrderByItemClick} size='mini'>Votes</Button>
+                <Button icon='sort numeric descending' name='voteScore' positive={sortValue === "voteScore"} onClick={this.handleOrderByItemClick} size='mini' content='Vote' />
               </Button.Group>
             </Container>
           </Grid.Column>
@@ -38,18 +37,13 @@ class Posts extends Component {
           </Grid.Column>
         </Grid.Row>
         <Grid.Row>
-
           <Grid.Column width={12}>
+
             { this.props.posts.items.map((post) => (
-              <Post
-                key={post.id}
-                post={post}
-              />
-            ))
-            }
+              <Post key={post.id} post={post}/>
+            ))}
 
           </Grid.Column>
-
           <Grid.Column width={4}>
             <Menu fluid vertical tabular='right'>
               <Menu.Item name='all categories' active={activeCategoryItem === "all categories"} onClick={this.handleCategoryItemClick} />
