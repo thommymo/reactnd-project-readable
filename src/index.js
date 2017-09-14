@@ -8,6 +8,7 @@ import { Provider } from 'react-redux'
 import { createLogger }  from 'redux-logger'
 import 'semantic-ui-css/semantic.min.css'
 import thunkMiddleware from 'redux-thunk'
+import { BrowserRouter } from 'react-router-dom';
 
 
 const logger = createLogger()
@@ -20,17 +21,11 @@ const store = createStore(
   )
 )
 
-
-
-
-
-  /*store
-  .dispatch(fetchCategories())
-  .then(() => console.log(store.getState()))*/
-
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </Provider>, document.getElementById('root'));
 
 registerServiceWorker();

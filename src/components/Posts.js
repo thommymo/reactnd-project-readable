@@ -3,27 +3,39 @@ import { Grid, Menu, Button, Container } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import Post from './Post'
 import { sortPosts } from '../actions'
+import { Route } from 'react-router-dom'
 
 class Posts extends Component {
 
   /*
-    TODO: Why is Ordering made with redux store and why is filtering made with state in this component? Is there any reason for that?
+    TODO: Why is Ordering made with redux store and why is filtering made with state in this component? Is there any specific reason for that?
     * this needs a reason or refactoring has to be made
   */
 
   state = {
-    activeCategoryItem: 'all categories',
+    activeCategoryItem: 'all'
   }
 
-  handleCategoryItemClick = (e, { name }) => this.setState({ activeCategoryItem: name })
+  handleCategoryItemClick = (e, { name }) => {
+    this.props.history.push( name )
+    this.setState({activeCategoryItem: name})
+  }
 
   handleOrderByItemClick = (e, { name }) => {
     this.props.dispatch(sortPosts(name))
   }
 
+  componentDidMount(){
+    if(this.props.match.params.category)
+      this.setState({activeCategoryItem: this.props.match.params.category})
+  }
+
   render() {
+
     const { sortValue, sortOrder } = this.props.posts
+    const { category } = this.props.match.params
     const { activeCategoryItem } = this.state
+
     return (
       <Grid padded>
         <Grid.Row>
@@ -45,27 +57,30 @@ class Posts extends Component {
         <Grid.Row>
           <Grid.Column width={12}>
 
-            { this.props.posts.items.filter((post) => (activeCategoryItem === "all categories" || post.category===activeCategoryItem)).map((post) => (
+            {
+              // TODO: Listen to the category param from react-router-dom
+            }
+
+            { this.props.posts.items.filter((post) => (activeCategoryItem === "all" || post.category===activeCategoryItem)).map((post) => (
               <Post key={post.id} post={post}/>
-            ))}
+            )) }
 
           </Grid.Column>
           <Grid.Column width={4}>
             <Menu fluid vertical tabular='right'>
-              <Menu.Item name='all categories' active={activeCategoryItem === "all categories"} onClick={this.handleCategoryItemClick} />
+              <Menu.Item name='all' content='All categories' active={activeCategoryItem === "all"} onClick={this.handleCategoryItemClick} />
 
-              { this.props.categories.items.map((category) => (
-                <Menu.Item key={category.name} name={category.name} active={activeCategoryItem === category.name} onClick={this.handleCategoryItemClick} />
-
+              { this.props.categories.items.map((c) => (
+                <Menu.Item key={c.name} name={c.name} active={c.name === activeCategoryItem} onClick={this.handleCategoryItemClick}/>
               ))}
-              
+
             </Menu>
           </Grid.Column>
         </Grid.Row>
 
       </Grid>
 
-    );
+    )
   }
 }
 

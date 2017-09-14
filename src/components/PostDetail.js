@@ -6,8 +6,6 @@ import {
 
 class Post extends Component {
 
-
-
   render() {
     console.log(this.props.category);
     //Check if timestamp generates a real date
