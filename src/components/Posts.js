@@ -56,7 +56,7 @@ class Posts extends Component {
         </Grid.Row>
         <Grid.Row>
           <Grid.Column width={12}>
-
+            
             {
               // TODO: Listen to the category param from react-router-dom
             }

@@ -20,9 +20,9 @@ class App extends Component {
   render() {
     return (
         <Container>
-          <Route exact path="/" component={Posts}/>
-          <Route exact path="/:category" component={Posts}/>
-          <Route path="/:category/:id" component={PostDetail}/>
+          <Route exact path="/" component={Posts} />
+          <Route exact path="/:category" component={Posts} />
+          <Route path="/:category/:id" component={PostDetail} />
         </Container>
     );
   }

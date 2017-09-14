@@ -2,15 +2,15 @@ import React, { Component } from 'react';
 import {
   Grid, Header, Label, Container
 } from 'semantic-ui-react'
+import { Link } from 'react-router-dom'
 //import './App.css';
 
 class Post extends Component {
 
-
-
   render() {
     console.log(this.props.category);
     //Check if timestamp generates a real date
+    //TODO: Refactor this, so I can use it as "Stupid" Component
     let formattedDate = 0
     const date = new Date(this.props.post.timestamp)
     if(Object.prototype.toString.call(date) && isFinite(date))
@@ -22,7 +22,14 @@ class Post extends Component {
           <Grid>
             <Grid.Row>
               <Grid.Column width={11}>
-                <Header as="h2">{this.props.post.title}</Header>
+                { this.props.id === undefined &&
+                  <Link to={"/" + this.props.post.category + "/" + this.props.post.id}>
+                    <Header as="h2">{this.props.post.title}</Header>
+                  </Link>
+                }
+                { this.props.id !== undefined &&
+                  <Header as="h2">{this.props.post.title}</Header>
+                }
               </Grid.Column>
               <Grid.Column width={5}>
                 <Container textAlign="right">

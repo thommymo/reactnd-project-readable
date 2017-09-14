@@ -1,56 +1,38 @@
 import React, { Component } from 'react';
+import Post from './Post'
 import {
-  Grid, Header, Label, Container
+  Grid, Container
 } from 'semantic-ui-react'
+import { connect } from 'react-redux'
 //import './App.css';
 
-class Post extends Component {
+class PostDetail extends Component {
+
 
   render() {
-    console.log(this.props.category);
-    //Check if timestamp generates a real date
-    let formattedDate = 0
-    const date = new Date(this.props.post.timestamp)
-    if(Object.prototype.toString.call(date) && isFinite(date))
-      formattedDate = new Intl.DateTimeFormat().format(date)
+    let post = this.props.posts.items.filter((post) => (post.id === this.props.match.params.id))
+    post = post[0]
 
     return (
-      <div className="Posts">
-        <Container>
-          <Grid>
-            <Grid.Row>
-              <Grid.Column width={11}>
-                <Header as="h2">{this.props.post.title}</Header>
-              </Grid.Column>
-              <Grid.Column width={5}>
-                <Container textAlign="right">
-                  <Label color='blue' image>
-                    VoteScore
-                    <Label.Detail>
-                      {this.props.post.voteScore}
-                    </Label.Detail>
-                  </Label>
-                </Container>
-              </Grid.Column>
-            </Grid.Row>
-            <Grid.Row>
-              <Grid.Column width={16}>
-                <Label color='grey' image>
-                  {this.props.post.author}
-                  <Label.Detail>
-                    {formattedDate}
-                  </Label.Detail>
-                </Label>
-              </Grid.Column>
-            </Grid.Row>
-            <Grid.Row>
-              <Grid.Column width={16}>{this.props.post.body}</Grid.Column>
-            </Grid.Row>
-          </Grid>
-        </Container>
-      </div>
+      <Container>
+        <Grid padded>
+          <Grid.Row>
+            <Grid.Column width={12}>
+              { post &&
+                <Post key={post.id} post={post} id={this.props.match.params.id}/>
+              }
+            </Grid.Column>
+            <Grid.Column width={4}>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </Container>
     );
   }
 }
 
-export default (Post);
+function mapStateToProps (store) {
+  return {posts: store.posts, dispatch: store.dispatch }
+}
+
+export default connect(mapStateToProps)(PostDetail);
