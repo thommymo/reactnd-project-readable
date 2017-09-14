@@ -56,8 +56,16 @@ class Posts extends Component {
 
               { this.props.categories.items.map((category) => (
                 <Menu.Item key={category.name} name={category.name} active={activeCategoryItem === category.name} onClick={this.handleCategoryItemClick} />
+<<<<<<< HEAD
               ))}
 
+||||||| merged common ancestors
+              ))
+              }
+=======
+              ))}
+
+>>>>>>> 8ab7f865e293ce3d6a3109d5e5429fc9863c9222
             </Menu>
           </Grid.Column>
         </Grid.Row>
