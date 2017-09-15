@@ -50,13 +50,16 @@ function posts (state = initialPostsState, action) {
     case RECEIVE_COMMENTS:
 
 
-      //This does not work, when somebody did not load posts first...
-      //TODO: Make this work, when a user is hitting a direct URL
+      // This does not work, when somebody did not load posts first...
+      // TODO: Make this work, when a user is hitting a direct URL
+      // See http://redux.js.org/docs/advanced/AsyncActions.html how
+      // to solve this. There is a fetchPostsIfNeeded function. I think
+      // I should implement something similar
 
       //1. Get Index of the post
       const foundIndex = state.items.findIndex((post) => (post.id === action.postid))
       //2. Add Comments to the post
-      //TODO: Is this the right way to add commments to a post it?
+      //TODO: Is this the right way to add commments to a post id?
       if(foundIndex !== -1)
         state.items[foundIndex].comments = action.comments
 

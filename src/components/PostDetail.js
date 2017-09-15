@@ -54,7 +54,7 @@ class PostDetail extends Component {
           </Grid.Column>
           <Grid.Column width={4}>
           </Grid.Column>
-          { post.comments!==undefined && post.comments.map((comment) => (
+          { post && post.comments.map((comment) => (
             <Container key={comment.id}>
               <Grid.Row>
                 <Grid.Column width={7}>
@@ -64,7 +64,7 @@ class PostDetail extends Component {
                       {comment.timestamp}
                     </Label.Detail>
                   </Label>
-                  <Label color='blue' image>
+                  <Label color='grey' image>
                     VoteScore
                     <Label.Detail>
                       {comment.voteScore}
