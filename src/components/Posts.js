@@ -3,7 +3,6 @@ import { Grid, Menu, Button, Container } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import Post from './Post'
 import { sortPosts } from '../actions'
-import { Route } from 'react-router-dom'
 
 class Posts extends Component {
 
@@ -33,7 +32,6 @@ class Posts extends Component {
   render() {
 
     const { sortValue, sortOrder } = this.props.posts
-    const { category } = this.props.match.params
     const { activeCategoryItem } = this.state
 
     return (
@@ -56,9 +54,9 @@ class Posts extends Component {
         </Grid.Row>
         <Grid.Row>
           <Grid.Column width={12}>
-            
+
             {
-              // TODO: Listen to the category param from react-router-dom
+              // TODO: Maybe it's better to Listen to the category param from react-router-dom
             }
 
             { this.props.posts.items.filter((post) => (activeCategoryItem === "all" || post.category===activeCategoryItem)).map((post) => (

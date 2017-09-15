@@ -10,7 +10,6 @@ import 'semantic-ui-css/semantic.min.css'
 import thunkMiddleware from 'redux-thunk'
 import { BrowserRouter } from 'react-router-dom';
 
-
 const logger = createLogger()
 
 const store = createStore(

@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom'
 class Post extends Component {
 
   render() {
-    console.log(this.props.category);
+
     //Check if timestamp generates a real date
     //TODO: Refactor this, so I can use it as "Stupid" Component
     let formattedDate = 0

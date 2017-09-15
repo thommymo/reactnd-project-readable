@@ -5,7 +5,22 @@ export const REQUEST_POSTS = 'REQUEST_POSTS'
 export const RECEIVE_POSTS = 'RECEIVE_POSTS'
 export const REQUEST_CATEGORIES = 'REQUEST_CATEGORIES'
 export const RECEIVE_CATEGORIES = 'RECEIVE_CATEGORIES'
+export const REQUEST_COMMENTS = 'REQUEST_COMMENTS'
+export const RECEIVE_COMMENTS = 'RECEIVE_COMMENTS'
 
+export function requestComments(){
+  return {
+    type: REQUEST_COMMENTS
+  }
+}
+
+export function receiveComments(postid, json){
+  return {
+    type: RECEIVE_COMMENTS,
+    comments: json,
+    postid: postid
+  }
+}
 
 export function requestCategories(){
   return {
@@ -14,7 +29,6 @@ export function requestCategories(){
 }
 
 export function receiveCategories(json){
-  console.log(json)
   return {
     type: RECEIVE_CATEGORIES,
     categories: json.categories
@@ -88,7 +102,6 @@ export function requestPosts(){
 }
 
 export function receivePosts(json){
-  //console.log(json)
   return {
     type: RECEIVE_POSTS,
     posts: json
@@ -106,6 +119,20 @@ export function fetchPosts() {
       )
       .then(json =>
         dispatch(receivePosts(json))
+      )
+  }
+}
+
+export function fetchComments(id) {
+  return function (dispatch) {
+  dispatch(requestComments())
+    fetch(`${api}/posts/${id}/comments`, { method: 'GET', headers })
+      .then(
+        response => response.json(),
+        error => console.log('An error occured.', error)
+      )
+      .then(json =>
+        dispatch(receiveComments(id, json))
       )
   }
 }

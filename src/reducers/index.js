@@ -7,7 +7,9 @@ import {
   RECEIVE_POSTS,
   SORT_POSTS,
   REQUEST_CATEGORIES,
-  RECEIVE_CATEGORIES
+  RECEIVE_CATEGORIES,
+  REQUEST_COMMENTS,
+  RECEIVE_COMMENTS
 } from '../actions'
 
 const initialCategoriesState = {
@@ -33,6 +35,7 @@ function categories (state = initialCategoriesState, action) {
 
 const initialPostsState = {
   isFetching: false,
+  isFetchingComments: false,
   sortValue: 'voteScore',
   sortOrder: 'arrow up',
   items: []
@@ -40,6 +43,27 @@ const initialPostsState = {
 
 function posts (state = initialPostsState, action) {
   switch(action.type){
+    case REQUEST_COMMENTS:
+      return Object.assign({}, state, {
+        isFetchingComments: true
+      })
+    case RECEIVE_COMMENTS:
+
+
+      //This does not work, when somebody did not load posts first...
+      //TODO: Make this work, when a user is hitting a direct URL
+
+      //1. Get Index of the post
+      const foundIndex = state.items.findIndex((post) => (post.id === action.postid))
+      //2. Add Comments to the post
+      //TODO: Is this the right way to add commments to a post it?
+      if(foundIndex !== -1)
+        state.items[foundIndex].comments = action.comments
+
+      return Object.assign({}, state, {
+        isFetchingComments: false,
+        items: state.items
+      })
     case REQUEST_POSTS:
       return Object.assign({}, state, {
         isFetching: true
@@ -89,6 +113,27 @@ const myShapeDesign = {
   },
   posts: {
       isFetching: false,
-      items: []
+      items: [
+        {
+          author: "thingtwo",
+          body: "Everyone says so after all.",
+          category:"react",
+          deleted:false,
+          id:"8xf0y6ziyjabvozdd253nd",
+          timestamp:1467166872634,
+          title:"Udacity is the best place to learn React",
+          voteScore:6,
+          comments: [
+            {
+              author: "thingtwo",
+              body: "Everyone says so after all.",
+              deleted:false,
+              id:"8xf0y6ziyjabvozdd253nd",
+              timestamp:1467166872634,
+              title:"Udacity is the best place to learn React",
+              voteScore:6,
+            }
+          ]
+      }]
   }
 }
