@@ -19,7 +19,8 @@ class App extends Component {
     return (
       <Container>
 
-        { /*
+        {
+          /*
           TODO: From time to time I should fetch new Posts, since somebody else could have updated the posts in
           the Database. If I do not fetch posts or comments from time to time, this user
           will never see new items.

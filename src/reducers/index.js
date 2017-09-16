@@ -82,7 +82,13 @@ function comments (state = initialCommentsState, action) {
 
       return Object.assign({}, state, {
         isFetchingComments: false,
-        items: action.comments
+        // return items only if the items are not in the array yet.
+        items: state.items.concat(
+          action.comments.filter( (comment) => (
+            state.items.find((item) => (comment.id === item.id))  === undefined
+          )
+        ))
+
       })
     default:
       return state

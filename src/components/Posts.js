@@ -25,7 +25,6 @@ class Posts extends Component {
   }
 
   componentDidMount(){
-    this.props.dispatch(fetchPosts())
     if(this.props.match.params.category)
       this.setState({activeCategoryItem: this.props.match.params.category})
   }
