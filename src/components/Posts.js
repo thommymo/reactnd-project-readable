@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Grid, Menu, Button, Container } from 'semantic-ui-react'
+import { Grid, Menu, Button, Container, Dropdown, Divider } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import Post from './Post'
 import { sortPosts } from '../actions'
@@ -37,23 +37,41 @@ class Posts extends Component {
     return (
       <Grid padded>
         <Grid.Row>
-          <Grid.Column width={7}>
-            <Button icon='plus' content='New Post' color='blue'/>
-          </Grid.Column>
-          <Grid.Column width={5}>
-            <Container textAlign='right'>
-              <Button.Group>
-                <Button icon="sort numeric ascending" name='timestamp' positive={sortValue === "timestamp"} onClick={this.handleOrderByItemClick} size='mini' content='Date' />
-                <Button.Or text='or' size='mini'/>
-                <Button icon='sort numeric descending' name='voteScore' positive={sortValue === "voteScore"} onClick={this.handleOrderByItemClick} size='mini' content='Vote' />
-              </Button.Group>
-            </Container>
-          </Grid.Column>
-          <Grid.Column width={4}>
+          <Grid.Column width={16}>
+            <Menu size='small'>
+
+              <Menu.Item>
+                <Button icon='plus' content='New Post' color='blue'/>
+              </Menu.Item>
+
+              <Menu.Item  position='right'>
+                <Button.Group>
+                  <Button icon="sort numeric ascending" name='timestamp' positive={sortValue === "timestamp"} onClick={this.handleOrderByItemClick} size='mini' content='Date' />
+                  <Button.Or text='or' size='mini'/>
+                  <Button icon='sort numeric descending' name='voteScore' positive={sortValue === "voteScore"} onClick={this.handleOrderByItemClick} size='mini' content='Vote' />
+                </Button.Group>
+              </Menu.Item>
+
+              <Menu.Menu>
+
+                <Dropdown item text='Categories'>
+                  <Dropdown.Menu>
+                    <Dropdown.Item name='all' content='All categories' active={activeCategoryItem === "all"} onClick={this.handleCategoryItemClick} />
+
+                    { this.props.categories.items.map((c) => (
+                      <Dropdown.Item key={c.name} name={c.name} content={c.name} active={c.name === activeCategoryItem} onClick={this.handleCategoryItemClick}/>
+                    ))}
+
+                  </Dropdown.Menu>
+                </Dropdown>
+
+              </Menu.Menu>
+
+            </Menu>
           </Grid.Column>
         </Grid.Row>
         <Grid.Row>
-          <Grid.Column width={12}>
+          <Grid.Column width={16}>
 
             {
               // TODO: Maybe it's better to Listen to the category param from react-router-dom
@@ -64,16 +82,7 @@ class Posts extends Component {
             )) }
 
           </Grid.Column>
-          <Grid.Column width={4}>
-            <Menu fluid vertical tabular='right'>
-              <Menu.Item name='all' content='All categories' active={activeCategoryItem === "all"} onClick={this.handleCategoryItemClick} />
 
-              { this.props.categories.items.map((c) => (
-                <Menu.Item key={c.name} name={c.name} active={c.name === activeCategoryItem} onClick={this.handleCategoryItemClick}/>
-              ))}
-
-            </Menu>
-          </Grid.Column>
         </Grid.Row>
 
       </Grid>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Grid, Header, Label, Container
+  Grid, Header, Label, Container, Divider
 } from 'semantic-ui-react'
 import VoteScore from './VoteScore'
 import { Link } from 'react-router-dom'
@@ -36,7 +36,7 @@ class Post extends Component {
                 <Container textAlign="right">
                   <VoteScore voteScore={this.props.post.voteScore} postid={this.props.post.id} />
                 </Container>
-                </Grid.Column>
+              </Grid.Column>
             </Grid.Row>
             <Grid.Row>
               <Grid.Column width={16}>
@@ -49,9 +49,11 @@ class Post extends Component {
               </Grid.Column>
             </Grid.Row>
             <Grid.Row>
-              <Grid.Column width={16}>{this.props.post.body}</Grid.Column>
+              <Grid.Column width={16}>{this.props.post.body}
+              <Divider/></Grid.Column>
             </Grid.Row>
           </Grid>
+
         </Container>
       </div>
     );

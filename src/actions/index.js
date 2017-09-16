@@ -159,12 +159,12 @@ export function addPost({title, author, content}){
   }
 }
 
-export function addCommentToPost({post, author, content}){
+export function addCommentToPost(postid, body, author){
   return {
     type: ADD_COMMENT_TO_POST,
-    post,
-    author,
-    content
+    postid,
+    body,
+    author
   }
 }
 
