@@ -9,7 +9,8 @@ import {
   REQUEST_CATEGORIES,
   RECEIVE_CATEGORIES,
   REQUEST_COMMENTS,
-  RECEIVE_COMMENTS
+  RECEIVE_COMMENTS,
+  CHANGE_VOTE_SCORE
 } from '../actions'
 
 const initialCategoriesState = {
@@ -47,6 +48,16 @@ function posts (state = initialPostsState, action) {
       return Object.assign({}, state, {
         isFetching: true
       })
+    case CHANGE_VOTE_SCORE:
+      const index = state.items.findIndex((post => post.id === action.postid))
+      if (index>-1) {
+          state.items[index].voteScore+=action.value
+        return Object.assign({}, state, {
+          items: state.items
+        })
+      } else {
+        return state
+      }
     case RECEIVE_POSTS:
       return Object.assign({}, state, {
         isFetching: false,
@@ -74,12 +85,21 @@ const initialCommentsState = {
 }
 function comments (state = initialCommentsState, action) {
   switch(action.type){
+    case CHANGE_VOTE_SCORE:
+      const index = state.items.findIndex((comment => comment.id === action.postid))
+      if (index>-1) {
+          state.items[index].voteScore+=action.value
+        return Object.assign({}, state, {
+          items: state.items
+        })
+      } else {
+        return state
+      }
     case REQUEST_COMMENTS:
       return Object.assign({}, state, {
         isFetchingComments: true
       })
     case RECEIVE_COMMENTS:
-
       return Object.assign({}, state, {
         isFetchingComments: false,
         // return items only if the items are not in the array yet.

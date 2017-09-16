@@ -5,7 +5,8 @@ import {
 } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { fetchPosts, fetchComments } from '../actions'
+import { fetchComments } from '../actions'
+import VoteScore from './VoteScore'
 //import './App.css';
 
 class PostDetail extends Component {
@@ -50,52 +51,67 @@ class PostDetail extends Component {
             </Grid.Column>
           </Grid.Row>
 
+          <Grid.Row>
+
+            <Grid.Column width={8}>
+              {this.props.comments.items.length === 0 &&
+                <Header as="h2">No Comments yet</Header>
+              }
+              {this.props.comments.items.length === 1 &&
+                <Header as="h2">{this.props.comments.items.length} Comment</Header>
+              }
+
+              {this.props.comments.items.length > 1 &&
+                <Header as="h2">{this.props.comments.items.length} Comments</Header>
+              }
+            </Grid.Column>
+            <Grid.Column width={4}>
+              <Container textAlign='right'>
+                <Button icon='plus' content='Add Comment' color='blue' />
+              </Container>
 
 
-          <Grid.Column width={12}>
-            <Header as="h2">Comments</Header>
-          </Grid.Column>
-          <Grid.Column width={4}>
-          </Grid.Column>
-          { this.props.comments.items && this.props.comments.items.filter((comment) => (comment.parentId === this.props.match.params.id)).map((comment) => (
-            <Container key={comment.id}>
-              <Grid.Row>
-                <Grid.Column width={7}>
-                  <Label color='grey' image>
-                    {comment.author}
-                    <Label.Detail>
-                      {comment.timestamp}
-                    </Label.Detail>
-                  </Label>
-                  <Label color='grey' image>
-                    VoteScore
-                    <Label.Detail>
-                      {comment.voteScore}
-                    </Label.Detail>
-                  </Label>
-                </Grid.Column>
-                <Grid.Column width={5}>
-                  <Container textAlign="right">
-
-                  </Container>
-                </Grid.Column>
-                <Grid.Column width={4}>
-                </Grid.Column>
-              </Grid.Row>
-              <Grid.Row>
-                <Grid.Column width={12}>
-                  <p>{comment.body}</p>
-                </Grid.Column>
-                <Grid.Column width={4}>
-                </Grid.Column>
-
-              </Grid.Row>
-            </Container>
-
-          )) }
-
-
+            </Grid.Column>
+          </Grid.Row>
         </Grid>
+
+        { this.props.comments.items && this.props.comments.items.filter((comment) => (comment.parentId === this.props.match.params.id)).map((comment) => (
+          <Grid key={comment.id} padded >
+            <Grid.Row >
+              <Grid.Column width={6}>
+                <Label color='grey' image>
+                  {comment.author}
+                  <Label.Detail>
+                    {comment.timestamp}
+                  </Label.Detail>
+                </Label>
+              </Grid.Column>
+              <Grid.Column width={6}>
+                <Container textAlign='right'>
+                  <VoteScore voteScore={comment.voteScore} postid={comment.id} />
+                  <Button.Group size='mini'>
+                    <Button icon="edit" name='timestamp' color='blue' content='Edit' />
+                    <Button icon='delete' name='voteScore' color='red' content='Delete' />
+                  </Button.Group>
+                </Container>
+              </Grid.Column>
+              <Grid.Column width={4}>
+              </Grid.Column>
+            </Grid.Row>
+            <Grid.Row>
+              <Grid.Column width={12}>
+                <p>{comment.body}</p>
+              </Grid.Column>
+              <Grid.Column width={4}>
+              </Grid.Column>
+
+            </Grid.Row>
+          </Grid>
+
+        )) }
+
+
+
       </Container>
     );
   }

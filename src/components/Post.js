@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import {
   Grid, Header, Label, Container
 } from 'semantic-ui-react'
+import VoteScore from './VoteScore'
 import { Link } from 'react-router-dom'
 //import './App.css';
 
 class Post extends Component {
 
   render() {
-    
+
     //Check if timestamp generates a real date
     //TODO: Refactor this, so I can use it as "Stupid" Component
     let formattedDate = 0
@@ -33,14 +34,9 @@ class Post extends Component {
               </Grid.Column>
               <Grid.Column width={5}>
                 <Container textAlign="right">
-                  <Label color='blue' image>
-                    VoteScore
-                    <Label.Detail>
-                      {this.props.post.voteScore}
-                    </Label.Detail>
-                  </Label>
+                  <VoteScore voteScore={this.props.post.voteScore} postid={this.props.post.id} />
                 </Container>
-              </Grid.Column>
+                </Grid.Column>
             </Grid.Row>
             <Grid.Row>
               <Grid.Column width={16}>

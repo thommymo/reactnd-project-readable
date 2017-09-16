@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Grid, Menu, Button, Container } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import Post from './Post'
-import { sortPosts, fetchPosts } from '../actions'
+import { sortPosts } from '../actions'
 
 class Posts extends Component {
 
@@ -31,7 +31,7 @@ class Posts extends Component {
 
   render() {
 
-    const { sortValue, sortOrder } = this.props.posts
+    const { sortValue } = this.props.posts
     const { activeCategoryItem } = this.state
 
     return (

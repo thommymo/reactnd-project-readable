@@ -7,7 +7,15 @@ export const REQUEST_CATEGORIES = 'REQUEST_CATEGORIES'
 export const RECEIVE_CATEGORIES = 'RECEIVE_CATEGORIES'
 export const REQUEST_COMMENTS = 'REQUEST_COMMENTS'
 export const RECEIVE_COMMENTS = 'RECEIVE_COMMENTS'
+export const CHANGE_VOTE_SCORE = 'CHANGE_VOTE_SCORE'
 
+export function changeVoteScore (postid, value){
+  return {
+    type: CHANGE_VOTE_SCORE,
+    postid: postid,
+    value: value
+  }
+}
 export function requestComments(){
   return {
     type: REQUEST_COMMENTS
