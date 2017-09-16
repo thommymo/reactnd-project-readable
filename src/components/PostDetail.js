@@ -5,19 +5,19 @@ import {
 } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { fetchComments } from '../actions'
+import { fetchPosts, fetchComments } from '../actions'
 //import './App.css';
 
 class PostDetail extends Component {
 
   componentDidMount(){
-    console.log(this.props.match.params.id);
     this.props.dispatch(fetchComments(this.props.match.params.id))
   }
 
   render() {
     let post = this.props.posts.items.filter((post) => (post.id === this.props.match.params.id))
     post = post[0]
+    console.log(post);
 
     return (
       <Container>
@@ -49,12 +49,15 @@ class PostDetail extends Component {
             <Grid.Column width={4}>
             </Grid.Column>
           </Grid.Row>
+
+
+
           <Grid.Column width={12}>
             <Header as="h2">Comments</Header>
           </Grid.Column>
           <Grid.Column width={4}>
           </Grid.Column>
-          { post && post.comments.map((comment) => (
+          { this.props.comments.items && this.props.comments.items.filter((comment) => (comment.parentId === this.props.match.params.id)).map((comment) => (
             <Container key={comment.id}>
               <Grid.Row>
                 <Grid.Column width={7}>
@@ -90,6 +93,8 @@ class PostDetail extends Component {
             </Container>
 
           )) }
+
+
         </Grid>
       </Container>
     );
@@ -97,7 +102,7 @@ class PostDetail extends Component {
 }
 
 function mapStateToProps (store) {
-  return {posts: store.posts, dispatch: store.dispatch }
+  return {posts: store.posts, comments: store.comments, dispatch: store.dispatch }
 }
 
 export default connect(mapStateToProps)(PostDetail);

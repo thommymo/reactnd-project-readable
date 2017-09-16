@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Grid, Menu, Button, Container } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import Post from './Post'
-import { sortPosts } from '../actions'
+import { sortPosts, fetchPosts } from '../actions'
 
 class Posts extends Component {
 
@@ -25,6 +25,7 @@ class Posts extends Component {
   }
 
   componentDidMount(){
+    this.props.dispatch(fetchPosts())
     if(this.props.match.params.category)
       this.setState({activeCategoryItem: this.props.match.params.category})
   }

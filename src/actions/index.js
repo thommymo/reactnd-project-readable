@@ -109,23 +109,28 @@ export function receivePosts(json){
 }
 
 
-export function fetchPosts() {
-  return function (dispatch) {
-  dispatch(requestPosts())
-    fetch(`${api}/posts`, { method: 'GET', headers })
-      .then(
-        response => response.json(),
-        error => console.log('An error occured.', error)
-      )
-      .then(json =>
-        dispatch(receivePosts(json))
-      )
-  }
+export function fetchPosts(postid = undefined) {
+    return function (dispatch) {
+      dispatch(requestPosts())
+    //  window.setTimeout(function(){
+
+
+      fetch(`${api}/posts`, { method: 'GET', headers })
+        .then(
+          response => response.json(),
+          error => console.log('An error occured.', error)
+        )
+        .then(json =>
+          dispatch(receivePosts(json))
+        )
+      //  },500);
+    }
+
 }
 
 export function fetchComments(id) {
   return function (dispatch) {
-  dispatch(requestComments())
+    dispatch(requestComments())
     fetch(`${api}/posts/${id}/comments`, { method: 'GET', headers })
       .then(
         response => response.json(),
