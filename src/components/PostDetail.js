@@ -18,7 +18,9 @@ class PostDetail extends Component {
   render() {
     let post = this.props.posts.items.filter((post) => (post.id === this.props.match.params.id))
     post = post[0]
-    console.log(post);
+    let comments = false
+    if (this.props.comments.items)
+      comments = this.props.comments.items.filter((comment) => (comment.parentId === this.props.match.params.id))
 
     return (
       <Container>
@@ -52,16 +54,15 @@ class PostDetail extends Component {
           </Grid.Row>
 
           <Grid.Row>
-
             <Grid.Column width={8}>
-              {this.props.comments.items.length === 0 &&
+              {comments.length === 0 &&
                 <Header as="h2">No Comments yet</Header>
               }
-              {this.props.comments.items.length === 1 &&
+              {comments.length === 1 &&
                 <Header as="h2">{this.props.comments.items.length} Comment</Header>
               }
 
-              {this.props.comments.items.length > 1 &&
+              {comments.length > 1 &&
                 <Header as="h2">{this.props.comments.items.length} Comments</Header>
               }
             </Grid.Column>
@@ -75,7 +76,7 @@ class PostDetail extends Component {
           </Grid.Row>
         </Grid>
 
-        { this.props.comments.items && this.props.comments.items.filter((comment) => (comment.parentId === this.props.match.params.id)).map((comment) => (
+        { comments && comments.map((comment) => (
           <Grid key={comment.id} padded >
             <Grid.Row >
               <Grid.Column width={6}>
