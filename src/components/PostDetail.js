@@ -17,13 +17,14 @@ class PostDetail extends Component {
   }
 
   render() {
-
     let post = this.props.posts.items.filter((post) => (post.id === this.props.match.params.id))
     post = post[0]
 
-    let comments = false
+    let comments = 0
     if (this.props.comments.items)
       comments = this.props.comments.items.filter((comment) => (comment.parentId === this.props.match.params.id))
+
+    console.log(comments)
 
     return (
       <Container>
@@ -72,17 +73,16 @@ class PostDetail extends Component {
             <Grid.Column width={16}>
               <Segment attached>
                 <Divider horizontal >
-
-
+                  
                   {comments.length === 0 &&
                     <Header as="h2">No Comments yet</Header>
                   }
                   {comments.length === 1 &&
-                    <Header as="h2">{this.props.comments.items.length} Comment</Header>
+                    <Header as="h2">{comments.length} Comment</Header>
                   }
 
                   {comments.length > 1 &&
-                    <Header as="h2">{this.props.comments.items.length} Comments</Header>
+                    <Header as="h2">{comments.length} Comments</Header>
                   }
                   { post &&
                     <AddComment postid={post.id} />

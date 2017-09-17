@@ -83,12 +83,11 @@ const initialCommentsState = {
   isFetching: false,
   items: []
 }
-function getUUID(a){return a?(a^Math.random()*16>>a/4).toString(16):([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g,getUUID)}
 
 function comments (state = initialCommentsState, action) {
   switch(action.type){
     case ADD_COMMENT_TO_POST:
-    console.log(action);
+    /* console.log(action);
       state.items.push(
         {
           author: action.author,
@@ -99,7 +98,7 @@ function comments (state = initialCommentsState, action) {
           parentId: action.postid,
           timestamp: Date.now(),
           voteScore:0,
-        })
+        })*/
       return Object.assign({}, state, {
         items: state.items
 
@@ -119,6 +118,7 @@ function comments (state = initialCommentsState, action) {
         isFetchingComments: true
       })
     case RECEIVE_COMMENTS:
+      console.log(action.comments)
       return Object.assign({}, state, {
         isFetchingComments: false,
         // return items only if the items are not in the array yet.
