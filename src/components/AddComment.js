@@ -3,7 +3,7 @@ import {
   Modal, Button, Link, Icon, Header, Form, TextArea, Checkbox, Container, Input
 } from 'semantic-ui-react'
 import { connect } from 'react-redux'
-import { addCommentToPost } from '../actions'
+import { saveComments } from '../actions'
 
 class AddComment extends Component {
   constructor(props) {
@@ -18,7 +18,7 @@ class AddComment extends Component {
   handleClose = () => this.setState({ modalOpen: false })
 
   handleSubmit(event) {
-    this.props.dispatch(addCommentToPost(this.props.postid, this.textarea.ref.value, this.input.inputRef.value))
+    this.props.dispatch(saveComments(this.props.postid, this.textarea.ref.value, this.input.inputRef.value))
     this.handleClose()
     event.preventDefault()
   }

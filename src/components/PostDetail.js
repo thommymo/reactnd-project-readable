@@ -17,7 +17,6 @@ class PostDetail extends Component {
   }
 
   render() {
-
     let post = this.props.posts.items.filter((post) => (post.id === this.props.match.params.id))
     post = post[0]
 

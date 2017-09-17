@@ -44,13 +44,18 @@ export function receiveCategories(json){
 }
 
 const api = process.env.REACT_APP_CONTACTS_API_URL || 'http://localhost:3001'
-let token = localStorage.token
+let token = localStorage.token = 'whatever'
+
+console.log(localStorage.token)
 if (!token)
- token = localStorage.token = Math.random().toString(36).substr(-8)
+ token = localStorage.token = 'whatever'
+
+ console.log(localStorage.token)
 
 const headers = {
- 'Accept': 'application/json',
- 'Authorization': token
+
+ 'Authorization': token,
+ 'Content-Type': 'application/json'
 }
 
 //TODO: Here another action would be required: What happens, when there is an error when requesting or receiveing categories: http://redux.js.org/docs/advanced/AsyncActions.htmls
@@ -116,12 +121,9 @@ export function receivePosts(json){
   }
 }
 
-
 export function fetchPosts(postid = undefined) {
     return function (dispatch) {
       dispatch(requestPosts())
-    //  window.setTimeout(function(){
-
 
       fetch(`${api}/posts`, { method: 'GET', headers })
         .then(
@@ -131,9 +133,7 @@ export function fetchPosts(postid = undefined) {
         .then(json =>
           dispatch(receivePosts(json))
         )
-      //  },500);
     }
-
 }
 
 export function fetchComments(id) {
@@ -148,6 +148,32 @@ export function fetchComments(id) {
         dispatch(receiveComments(id, json))
       )
   }
+}
+
+function uuidv4() {
+  return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+    (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+  )
+}
+export function saveComments(parentId, body, author){
+  return function (dispatch) {
+      let data = {
+        'id': uuidv4(),
+        'timestamp': new Date().getTime(),
+        'body': body,
+        'author': author,
+        'parentId': parentId
+
+      }
+
+      fetch(`${api}/comments`, {
+        headers ,
+        body: JSON.stringify(data),
+        method: 'POST',
+      }).then((res) => (res.json())).then(() =>
+        dispatch(fetchComments(parentId)))
+
+    }
 }
 
 export function addPost({title, author, content}){
