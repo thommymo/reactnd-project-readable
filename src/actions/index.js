@@ -218,6 +218,24 @@ export function savePost(title, body, category, author){
 
     }
 }
+export function deletePost(id){
+  return function (dispatch) {
+      fetch(`${api}/posts/${id}`, {
+        headers ,
+        method: 'DELETE',
+      }).then((res) => (res.json())).then(() =>
+        dispatch(fetchPosts()))
+    }
+}
+export function deleteComment(id, parentId){
+  return function (dispatch) {
+      fetch(`${api}/comments/${id}`, {
+        headers ,
+        method: 'DELETE',
+      }).then((res) => (res.json())).then(() =>
+        dispatch(fetchComments(parentId)))
+    }
+}
 
 export function saveVote(id, vote, posttype){
   return function (dispatch) {

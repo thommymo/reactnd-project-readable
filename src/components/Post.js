@@ -4,7 +4,6 @@ import {
 } from 'semantic-ui-react'
 import VoteScore from './VoteScore'
 import { Link } from 'react-router-dom'
-//import './App.css';
 
 class Post extends Component {
 

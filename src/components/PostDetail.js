@@ -9,6 +9,8 @@ import { fetchComments } from '../actions'
 import VoteScore from './VoteScore'
 import AddandEditComment from './AddandEditComment'
 import AddAndEditPost from './AddAndEditPost'
+import DeletePost from './DeletePost'
+import DeleteComment from './DeleteComment'
 
 class PostDetail extends Component {
 
@@ -38,8 +40,9 @@ class PostDetail extends Component {
                 </Menu.Item>
 
                 <Menu.Item  position='right'>
-                  <Button.Group>
-                    {post &&
+                  {post &&
+                    <Button.Group>
+
                       <AddAndEditPost
                         content="Edit Post"
                         icon="edit"
@@ -49,9 +52,11 @@ class PostDetail extends Component {
                         author={post.author}
                         category={post.category}
                       />
-                    }
-                    <Button icon='delete' name='voteScore' color='red' size='mini' content='Delete' />
-                  </Button.Group>
+                      <DeletePost postid={post.id}/>
+
+
+                    </Button.Group>
+                  }
                 </Menu.Item>
 
 
@@ -143,7 +148,7 @@ class PostDetail extends Component {
                       color="blue"
                       icon="edit"
                     />
-                    <Button icon='delete' name='voteScore' color='red' content='Delete' />
+                    <DeleteComment commentId={comment.id} parentId={comment.parentId}/>
                   </Button.Group>
                 </Container>
               </Grid.Column>
