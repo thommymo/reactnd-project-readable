@@ -133,7 +133,6 @@ function comments (state = initialCommentsState, action) {
             state.items.find((item) => (comment.id === item.id))  === undefined
           )
         ))
-
       })
     default:
       return state
