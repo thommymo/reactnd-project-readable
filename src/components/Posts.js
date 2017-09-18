@@ -79,7 +79,7 @@ class Posts extends Component {
             }
 
             { this.props.posts.items.filter((post) => (activeCategoryItem === "all" || post.category===activeCategoryItem)).map((post) => (
-              <Post key={post.id} post={post}/>
+              <Post key={post.id} post={post} comments={this.props.comments.items.filter((comment) => (comment.parentId === post.id))}/>
             )) }
 
           </Grid.Column>
@@ -93,7 +93,7 @@ class Posts extends Component {
 }
 
 function mapStateToProps (store) {
-  return {categories: store.categories, posts: store.posts, dispatch: store.dispatch }
+  return {categories: store.categories, posts: store.posts, comments: store.comments, dispatch: store.dispatch }
 }
 
 export default connect(mapStateToProps)(Posts);

@@ -5,13 +5,13 @@ import PostDetail from './PostDetail'
 import {
   Container
 } from 'semantic-ui-react'
-import { fetchCategories, fetchPosts } from '../actions'
+import { fetchCategories, fetchPostsWithComments } from '../actions'
 import { Route, withRouter } from 'react-router-dom';
 
 class App extends Component {
 
   componentDidMount() {
-    this.props.dispatch(fetchPosts())
+    this.props.dispatch(fetchPostsWithComments())
     this.props.dispatch(fetchCategories())
   }
 

@@ -14,10 +14,6 @@ import DeleteComment from './DeleteComment'
 
 class PostDetail extends Component {
 
-  componentDidMount(){
-    this.props.dispatch(fetchComments(this.props.match.params.id))
-  }
-
   render() {
     //TODO: Move this into props. This does not make sense here. Instead turn this into a static componoent
     //TODO: Sort Comments DESC Date

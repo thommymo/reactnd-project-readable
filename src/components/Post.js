@@ -45,6 +45,13 @@ class Post extends Component {
                     {formattedDate}
                   </Label.Detail>
                 </Label>
+                {this.props.comments &&
+                  <Label>
+                    {`${this.props.comments.length} comments`}
+
+
+                  </Label>
+                }
               </Grid.Column>
             </Grid.Row>
             <Grid.Row>

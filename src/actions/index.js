@@ -130,6 +130,24 @@ export function fetchPosts(postid = undefined) {
     }
 }
 
+export function fetchPostsWithComments(postid = undefined) {
+    return function (dispatch) {
+      dispatch(requestPosts())
+
+      fetch(`${api}/posts`, { method: 'GET', headers })
+        .then(
+          response => response.json(),
+          error => console.log('An error occured.', error)
+        )
+        .then(json => {
+          dispatch(receivePosts(json))
+          for(let i=0; i<json.length; i++){
+            dispatch(fetchComments(json[i].id))
+          }
+        })
+    }
+}
+
 export function fetchComments(id) {
   return function (dispatch) {
     dispatch(requestComments())
