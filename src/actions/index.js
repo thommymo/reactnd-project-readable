@@ -190,7 +190,6 @@ export function saveVote(id, vote, posttype){
       }
     }
 }
-
 export function addPost({title, author, content}){
   return {
     type: ADD_POST,

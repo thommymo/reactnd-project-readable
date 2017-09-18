@@ -89,6 +89,23 @@ const initialCommentsState = {
 
 function comments (state = initialCommentsState, action) {
   switch(action.type){
+    case ADD_COMMENT_TO_POST:
+    console.log(action);
+      state.items.push(
+        {
+          author: action.author,
+          body: action.body,
+          deleted:false,
+          id: getUUID(action.body),
+          parentDeleted:false,
+          parentId: action.postid,
+          timestamp: Date.now(),
+          voteScore:0,
+        })
+      return Object.assign({}, state, {
+        items: state.items
+
+      })
     case CHANGE_VOTE_SCORE:
       const index = state.items.findIndex((comment => comment.id === action.id))
       if (index>-1) {
@@ -107,6 +124,7 @@ function comments (state = initialCommentsState, action) {
         isFetchingComments: true
       })
     case RECEIVE_COMMENTS:
+      console.log(action.comments)
       return Object.assign({}, state, {
         isFetchingComments: false,
         // return items only if the items are not in the array yet.
