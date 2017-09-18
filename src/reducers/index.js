@@ -2,7 +2,6 @@ import { combineReducers } from 'redux'
 
 import {
   ADD_POST,
-  ADD_COMMENT_TO_POST,
   REQUEST_POSTS,
   RECEIVE_POSTS,
   SORT_POSTS,
@@ -126,52 +125,3 @@ export default combineReducers({
   posts,
   comments,
 })
-
-// This could be my Design of the State Shape
-// TODO: Comment this in the final app, or remove
-const myShapeDesign = {
-  categories: {
-    isFetching: false,
-    items: [
-      {
-        name: 'elifant',
-        path: 'elifant'
-      },
-      {
-        name: 'bello',
-        path: 'bello'
-      }
-    ]
-  },
-  posts: {
-      isFetching: false,
-      items: [
-        {
-          author: "thingtwo",
-          body: "Everyone says so after all.",
-          category:"react",
-          deleted:false,
-          id:"8xf0y6ziyjabvozdd253nd",
-          timestamp:1467166872634,
-          title:"Udacity is the best place to learn React",
-          voteScore:6,
-
-      }]
-    },
-    comments: {
-      isFetching: false,
-      items: [
-        {
-          author: "thingtwo",
-          body: "Everyone says so after all.",
-          deleted:false,
-          id:"8xf0y6ziyjabvozdd253nd",
-          parentDeleted:false,
-          parentId:"8xf0y6ziyjabvozdd253nd",
-          timestamp:1467166872634,
-          title:"Udacity is the best place to learn React",
-          voteScore:6,
-        }
-      ]
-    }
-  }

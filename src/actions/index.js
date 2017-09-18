@@ -1,5 +1,4 @@
 export const ADD_POST = 'ADD_POST'
-export const ADD_COMMENT_TO_POST = 'ADD_COMMENT_TO_POST'
 export const SORT_POSTS = 'SORT_POSTS'
 export const REQUEST_POSTS = 'REQUEST_POSTS'
 export const RECEIVE_POSTS = 'RECEIVE_POSTS'
@@ -45,12 +44,8 @@ export function receiveCategories(json){
 
 const api = process.env.REACT_APP_CONTACTS_API_URL || 'http://localhost:3001'
 let token = localStorage.token = 'whatever'
-
-console.log(localStorage.token)
 if (!token)
  token = localStorage.token = 'whatever'
-
- console.log(localStorage.token)
 
 const headers = {
 
@@ -152,7 +147,7 @@ export function fetchComments(id) {
 
 function uuidv4() {
   return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
-    (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+    ((c ^ (crypto.getRandomValues(new Uint8Array(1))[0] & 15)) >> c / 4).toString(16)
   )
 }
 export function saveComment(parentId, body, author){
@@ -180,7 +175,6 @@ export function saveVote(id, vote, posttype){
         let data = {
           'option': vote
         }
-        console.log(posttype)
         fetch(`${api}/${posttype}/${id}`, {
           headers ,
           body: JSON.stringify(data),
@@ -197,15 +191,6 @@ export function addPost({title, author, content}){
     title,
     author,
     content
-  }
-}
-
-export function addCommentToPost(postid, body, author){
-  return {
-    type: ADD_COMMENT_TO_POST,
-    postid,
-    body,
-    author
   }
 }
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Modal, Button, Link, Icon, Header, Form, TextArea, Checkbox, Container, Input
+  Modal, Button, Header, Form, TextArea, Container, Input
 } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { saveComment } from '../actions'

@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {
-  Label, Button
+  Button
 } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { saveVote } from '../actions'

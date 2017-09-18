@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Grid, Menu, Button, Container, Dropdown, Divider } from 'semantic-ui-react'
+import { Grid, Menu, Button, Dropdown } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import Post from './Post'
 import { sortPosts } from '../actions'

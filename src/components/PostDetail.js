@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Post from './Post'
 import {
-  Grid, Container, Button, Header, Label, Menu, Divider, Segment, Modal, Icon
+  Grid, Container, Button, Header, Label, Menu, Divider, Segment
 } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
@@ -23,8 +23,6 @@ class PostDetail extends Component {
     let comments = 0
     if (this.props.comments.items)
       comments = this.props.comments.items.filter((comment) => (comment.parentId === this.props.match.params.id))
-
-    console.log(comments)
 
     return (
       <Container>
