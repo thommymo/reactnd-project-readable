@@ -68,13 +68,7 @@ function posts (state = initialPostsState, action) {
       return Object.assign({}, state, {
         sortValue: action.sortValue,
         sortOrder: action.sortOrder,
-        items: state.items.sort((a, b) => {
-          if (action.sortValue === "voteScore") {
-            return b[action.sortValue]-a[action.sortValue]
-          } else {
-            return a[action.sortValue]-b[action.sortValue]
-          }
-        })
+        items: state.items.sort((a, b) => (b[action.sortValue]-a[action.sortValue]))
       })
     default:
       return state
@@ -106,10 +100,7 @@ function comments (state = initialCommentsState, action) {
       })
     case RECEIVE_COMMENTS:
       let newitems = state.items.filter((comment) => (comment.parentId !== action.postid))
-      console.log(newitems);
-      console.log(action.comments)
       newitems = newitems.concat(action.comments)
-      console.log(newitems);
       return Object.assign({}, state, {
         isFetchingComments: false,
         // return items only if the items are not in the array yet.

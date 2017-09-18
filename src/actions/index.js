@@ -183,6 +183,22 @@ export function updateComment(id, parentId, body, author){
 
     }
 }
+export function updatePost(id, title, body, category, author){
+  return function (dispatch) {
+      let data = {
+        'title': title,
+        'body': body,
+        'author': author,
+        'category': category,
+      }
+      fetch(`${api}/posts/${id}`, {
+        headers ,
+        body: JSON.stringify(data),
+        method: 'PUT',
+      }).then((res) => (res.json())).then(() =>
+        dispatch(fetchPosts()))
+    }
+}
 export function savePost(title, body, category, author){
   return function (dispatch) {
       let data = {

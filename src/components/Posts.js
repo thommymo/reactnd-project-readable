@@ -3,7 +3,7 @@ import { Grid, Menu, Button, Dropdown } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import Post from './Post'
 import { sortPosts } from '../actions'
-import AddPost from './AddPost'
+import AddAndEditPost from './AddAndEditPost'
 
 class Posts extends Component {
 
@@ -42,12 +42,12 @@ class Posts extends Component {
             <Menu size='small'>
 
               <Menu.Item>
-                <AddPost/>
+                <AddAndEditPost content="Add Post" icon="plus"/>
               </Menu.Item>
 
               <Menu.Item  position='right'>
                 <Button.Group>
-                  <Button icon="sort numeric ascending" name='timestamp' positive={sortValue === "timestamp"} onClick={this.handleOrderByItemClick} size='mini' content='Date' />
+                  <Button icon="sort numeric descending" name='timestamp' positive={sortValue === "timestamp"} onClick={this.handleOrderByItemClick} size='mini' content='Date' />
                   <Button.Or text='or' size='mini'/>
                   <Button icon='sort numeric descending' name='voteScore' positive={sortValue === "voteScore"} onClick={this.handleOrderByItemClick} size='mini' content='Vote'  />
                 </Button.Group>

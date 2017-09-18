@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom'
 import { fetchComments } from '../actions'
 import VoteScore from './VoteScore'
 import AddandEditComment from './AddandEditComment'
+import AddAndEditPost from './AddAndEditPost'
 
 class PostDetail extends Component {
 
@@ -38,7 +39,17 @@ class PostDetail extends Component {
 
                 <Menu.Item  position='right'>
                   <Button.Group>
-                    <Button icon="edit" name='timestamp' color='blue' size='mini' content='Edit' />
+                    {post &&
+                      <AddAndEditPost
+                        content="Edit Post"
+                        icon="edit"
+                        postid={post.id}
+                        body={post.body}
+                        title={post.title}
+                        author={post.author}
+                        category={post.category}
+                      />
+                    }
                     <Button icon='delete' name='voteScore' color='red' size='mini' content='Delete' />
                   </Button.Group>
                 </Menu.Item>
