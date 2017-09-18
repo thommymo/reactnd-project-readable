@@ -10,7 +10,6 @@ import { withRouter } from "react-router-dom";
 class DeletePost extends Component {
 
   handleDelete = () => {
-    console.log(this.props);
     if(this.props.postid){
       this.props.dispatch(deletePost(this.props.postid))
       this.props.history.push("/")
