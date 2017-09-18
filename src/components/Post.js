@@ -40,7 +40,7 @@ class Post extends Component {
             </Grid.Row>
             <Grid.Row>
               <Grid.Column width={16}>
-                <Label color='grey' image>
+                <Label image>
                   {this.props.post.author}
                   <Label.Detail>
                     {formattedDate}

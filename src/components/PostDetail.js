@@ -8,7 +8,6 @@ import { Link } from 'react-router-dom'
 import { fetchComments } from '../actions'
 import VoteScore from './VoteScore'
 import AddComment from './AddComment'
-//import './App.css';
 
 class PostDetail extends Component {
 
@@ -17,6 +16,8 @@ class PostDetail extends Component {
   }
 
   render() {
+    //TODO: Move this into props. This does not make sense here. Instead turn this into a static componoent
+    //TODO: Sort Comments DESC Date
     let post = this.props.posts.items.filter((post) => (post.id === this.props.match.params.id))
     post = post[0]
 
@@ -106,11 +107,16 @@ class PostDetail extends Component {
             <Grid.Row >
 
               <Grid.Column width={8}>
-                <Label color='grey' image>
+                <Label image>
                   {comment.author}
-                  <Label.Detail>
-                    {comment.timestamp}
-                  </Label.Detail>
+                  { //Check if comment.timestamp is a date
+                    Object.prototype.toString.call(new Date(comment.timestamp)) && isFinite(new Date(comment.timestamp)) &&
+                    <Label.Detail>
+
+                      { new Intl.DateTimeFormat().format(new Date(comment.timestamp)) }
+
+                    </Label.Detail>
+                  }
                 </Label>
               </Grid.Column>
               <Grid.Column width={8}>
