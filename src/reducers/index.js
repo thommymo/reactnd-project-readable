@@ -1,7 +1,6 @@
 import { combineReducers } from 'redux'
 
 import {
-  ADD_POST,
   REQUEST_POSTS,
   RECEIVE_POSTS,
   SORT_POSTS,

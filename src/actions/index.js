@@ -1,4 +1,3 @@
-export const ADD_POST = 'ADD_POST'
 export const SORT_POSTS = 'SORT_POSTS'
 export const REQUEST_POSTS = 'REQUEST_POSTS'
 export const RECEIVE_POSTS = 'RECEIVE_POSTS'
@@ -168,6 +167,25 @@ export function saveComment(parentId, body, author){
 
     }
 }
+export function savePost(title, body, category, author){
+  return function (dispatch) {
+      let data = {
+        'id': uuidv4(),
+        'timestamp': new Date().getTime(),
+        'title': title,
+        'body': body,
+        'author': author,
+        'category': category,
+      }
+      fetch(`${api}/posts`, {
+        headers ,
+        body: JSON.stringify(data),
+        method: 'POST',
+      }).then((res) => (res.json())).then(() =>
+        dispatch(fetchPosts()))
+
+    }
+}
 
 export function saveVote(id, vote, posttype){
   return function (dispatch) {
@@ -185,15 +203,6 @@ export function saveVote(id, vote, posttype){
     }
 }
 
-export function addPost({title, author, content}){
-  return {
-    type: ADD_POST,
-    title,
-    author,
-    content
-  }
-}
-
 export function sortPosts(sortValue, sortOrder){
   return {
     type: SORT_POSTS,
@@ -201,6 +210,3 @@ export function sortPosts(sortValue, sortOrder){
     sortOrder: sortOrder
   }
 }
-
-
-// TODO: Add all other actions

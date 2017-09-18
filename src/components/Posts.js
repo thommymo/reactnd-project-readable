@@ -3,6 +3,7 @@ import { Grid, Menu, Button, Dropdown } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import Post from './Post'
 import { sortPosts } from '../actions'
+import AddPost from './AddPost'
 
 class Posts extends Component {
 
@@ -41,7 +42,7 @@ class Posts extends Component {
             <Menu size='small'>
 
               <Menu.Item>
-                <Button icon='plus' content='New Post' color='blue'/>
+                <AddPost/>
               </Menu.Item>
 
               <Menu.Item  position='right'>
