@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { fetchComments } from '../actions'
 import VoteScore from './VoteScore'
-import AddComment from './AddComment'
+import AddandEditComment from './AddandEditComment'
 
 class PostDetail extends Component {
 
@@ -84,17 +84,16 @@ class PostDetail extends Component {
                     <Header as="h2">{comments.length} Comments</Header>
                   }
                   { post &&
-                    <AddComment postid={post.id} />
+                    <AddandEditComment
+                      parentId={post.id}
+                      buttonContent="Add Comment"
+                      content="Add"
+                      color="grey"
+                      icon="plus"
+                    />
                   }
                 </Divider>
               </Segment>
-
-            </Grid.Column>
-            <Grid.Column width={8}>
-              <Container textAlign='right'>
-
-              </Container>
-
 
             </Grid.Column>
           </Grid.Row>
@@ -123,7 +122,16 @@ class PostDetail extends Component {
                 <Container textAlign='right'>
                   <VoteScore voteScore={comment.voteScore} id={comment.id} posttype="comments" />
                   <Button.Group size='mini'>
-                    <Button icon="edit" name='timestamp' color='blue' content='Edit' />
+                    <AddandEditComment
+                      parentId={comment.parentId}
+                      id={comment.id}
+                      author={comment.author}
+                      body={comment.body}
+                      buttonContent="Edit"
+                      content="Edit"
+                      color="blue"
+                      icon="edit"
+                    />
                     <Button icon='delete' name='voteScore' color='red' content='Delete' />
                   </Button.Group>
                 </Container>

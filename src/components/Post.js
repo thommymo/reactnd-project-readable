@@ -49,8 +49,10 @@ class Post extends Component {
               </Grid.Column>
             </Grid.Row>
             <Grid.Row>
-              <Grid.Column width={16}>{this.props.post.body}
-              <Divider/></Grid.Column>
+              <Grid.Column width={16}>
+                {this.props.post.body}
+                <Divider/>
+              </Grid.Column>
             </Grid.Row>
           </Grid>
 

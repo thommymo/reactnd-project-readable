@@ -105,14 +105,17 @@ function comments (state = initialCommentsState, action) {
         isFetchingComments: true
       })
     case RECEIVE_COMMENTS:
+      let newitems = state.items.filter((comment) => (comment.parentId !== action.postid))
+      console.log(newitems);
+      console.log(action.comments)
+      newitems = newitems.concat(action.comments)
+      console.log(newitems);
       return Object.assign({}, state, {
         isFetchingComments: false,
         // return items only if the items are not in the array yet.
-        items: state.items.concat(
-          action.comments.filter( (comment) => (
-            state.items.find((item) => (comment.id === item.id))  === undefined
-          )
-        ))
+        items: newitems
+
+
       })
     default:
       return state
