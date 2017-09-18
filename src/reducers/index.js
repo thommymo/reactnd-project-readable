@@ -104,7 +104,7 @@ function comments (state = initialCommentsState, action) {
       return Object.assign({}, state, {
         isFetchingComments: false,
         // return items only if the items are not in the array yet.
-        items: newitems
+        items: newitems.sort((a, b) => (b.timestamp-a.timestamp))
 
 
       })
