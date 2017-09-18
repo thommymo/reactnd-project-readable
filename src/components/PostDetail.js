@@ -73,7 +73,7 @@ class PostDetail extends Component {
             <Grid.Column width={16}>
               <Segment attached>
                 <Divider horizontal >
-                  
+
                   {comments.length === 0 &&
                     <Header as="h2">No Comments yet</Header>
                   }
@@ -117,7 +117,7 @@ class PostDetail extends Component {
               </Grid.Column>
               <Grid.Column width={8}>
                 <Container textAlign='right'>
-                  <VoteScore voteScore={comment.voteScore} postid={comment.id} />
+                  <VoteScore voteScore={comment.voteScore} id={comment.id} posttype="comments" />
                   <Button.Group size='mini'>
                     <Button icon="edit" name='timestamp' color='blue' content='Edit' />
                     <Button icon='delete' name='voteScore' color='red' content='Delete' />

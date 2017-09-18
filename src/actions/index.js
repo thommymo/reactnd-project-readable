@@ -9,10 +9,10 @@ export const REQUEST_COMMENTS = 'REQUEST_COMMENTS'
 export const RECEIVE_COMMENTS = 'RECEIVE_COMMENTS'
 export const CHANGE_VOTE_SCORE = 'CHANGE_VOTE_SCORE'
 
-export function changeVoteScore (postid, value){
+export function changeVoteScore (id, value){
   return {
     type: CHANGE_VOTE_SCORE,
-    postid: postid,
+    id: id,
     value: value
   }
 }
@@ -155,7 +155,7 @@ function uuidv4() {
     (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
   )
 }
-export function saveComments(parentId, body, author){
+export function saveComment(parentId, body, author){
   return function (dispatch) {
       let data = {
         'id': uuidv4(),
@@ -163,9 +163,7 @@ export function saveComments(parentId, body, author){
         'body': body,
         'author': author,
         'parentId': parentId
-
       }
-
       fetch(`${api}/comments`, {
         headers ,
         body: JSON.stringify(data),
@@ -173,6 +171,23 @@ export function saveComments(parentId, body, author){
       }).then((res) => (res.json())).then(() =>
         dispatch(fetchComments(parentId)))
 
+    }
+}
+
+export function saveVote(id, vote, posttype){
+  return function (dispatch) {
+      if(posttype === "comments" || posttype === "posts"){
+        let data = {
+          'option': vote
+        }
+        console.log(posttype)
+        fetch(`${api}/${posttype}/${id}`, {
+          headers ,
+          body: JSON.stringify(data),
+          method: 'POST',
+        }).then((res) => (res.json())).then(() =>
+          dispatch(changeVoteScore(id, vote)))
+      }
     }
 }
 

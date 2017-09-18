@@ -34,7 +34,7 @@ class Post extends Component {
               </Grid.Column>
               <Grid.Column width={5}>
                 <Container textAlign="right">
-                  <VoteScore voteScore={this.props.post.voteScore} postid={this.props.post.id} />
+                  <VoteScore voteScore={this.props.post.voteScore} id={this.props.post.id} posttype="posts"/>
                 </Container>
               </Grid.Column>
             </Grid.Row>

@@ -48,7 +48,7 @@ class Posts extends Component {
                 <Button.Group>
                   <Button icon="sort numeric ascending" name='timestamp' positive={sortValue === "timestamp"} onClick={this.handleOrderByItemClick} size='mini' content='Date' />
                   <Button.Or text='or' size='mini'/>
-                  <Button icon='sort numeric descending' name='voteScore' positive={sortValue === "voteScore"} onClick={this.handleOrderByItemClick} size='mini' content='Vote' />
+                  <Button icon='sort numeric descending' name='voteScore' positive={sortValue === "voteScore"} onClick={this.handleOrderByItemClick} size='mini' content='Vote'  />
                 </Button.Group>
               </Menu.Item>
 
