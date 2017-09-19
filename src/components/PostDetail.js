@@ -20,7 +20,6 @@ class PostDetail extends Component {
     let comments = 0
     if (this.props.comments.items)
       comments = this.props.comments.items.filter((comment) => (comment.parentId === this.props.match.params.id))
-
     return comments
   }
 
@@ -34,15 +33,12 @@ class PostDetail extends Component {
           <Grid.Row>
             <Grid.Column width={16}>
               <Menu size='small'>
-
                 <Menu.Item>
                   <Link to='/'><Button icon='arrow left' content='All Posts' color='grey' /></Link>
                 </Menu.Item>
-
                 <Menu.Item  position='right'>
                   {post &&
                     <Button.Group>
-
                       <AddAndEditPost
                         content="Edit Post"
                         icon="edit"
@@ -53,26 +49,12 @@ class PostDetail extends Component {
                         category={post.category}
                       />
                       <DeletePost postid={post.id}/>
-
-
                     </Button.Group>
                   }
                 </Menu.Item>
-
-
-
               </Menu>
-
-            </Grid.Column>
-            <Grid.Column width={5}>
-              <Container textAlign='right'>
-
-              </Container>
-            </Grid.Column>
-            <Grid.Column width={4}>
             </Grid.Column>
           </Grid.Row>
-
           <Grid.Row>
             <Grid.Column width={16}>
               {
@@ -81,14 +63,11 @@ class PostDetail extends Component {
                 <Post key={post.id} post={post} id={this.props.match.params.id}/>
               }
             </Grid.Column>
-
           </Grid.Row>
-
           <Grid.Row>
             <Grid.Column width={16}>
               <Segment attached>
                 <Divider horizontal >
-
                   {comments.length === 0 &&
                     <Header as="h2">No Comments yet</Header>
                   }
@@ -110,17 +89,12 @@ class PostDetail extends Component {
                   }
                 </Divider>
               </Segment>
-
             </Grid.Column>
           </Grid.Row>
         </Grid>
-
         { comments && comments.map((comment) => (
-
           <Comment comment={comment} key={comment.id} />
-
         )) }
-
       </Container>
     );
   }
