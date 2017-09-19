@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types'
 import {
   Grid, Header, Label, Container, Divider
 } from 'semantic-ui-react'
@@ -62,4 +63,10 @@ export function Post(props){
       </Container>
     </div>
   );
+}
+
+Post.propTypes = {
+  id: PropTypes.string,
+  post: PropTypes.object.isRequired,
+  comments: PropTypes.array
 }

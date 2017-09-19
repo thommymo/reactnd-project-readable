@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types'
 import {
   Modal, Button, Header, Form, TextArea, Container, Input, Dropdown
 } from 'semantic-ui-react'
@@ -55,9 +56,6 @@ class AddAndEditPost extends Component {
       }else{
         this.props.dispatch(savePost(title, body, category, author))
       }
-
-
-
       this.handleClose()
     }
     event.preventDefault()
@@ -125,11 +123,21 @@ class AddAndEditPost extends Component {
             </Container>
           </Form>
         </Modal.Content>
-
       </Modal>
-
-    );
+    )
   }
+}
+
+AddAndEditPost.propTypes = {
+  postid: PropTypes.string,
+  icon: PropTypes.string.isRequired,
+  content: PropTypes.string.isRequired,
+  body: PropTypes.string,
+  author: PropTypes.string,
+  category: PropTypes.string,
+  title: PropTypes.string,
+  dispatch: PropTypes.func.isRequired,
+  categories: PropTypes.array.isRequired
 }
 
 function mapStateToProps (store) {

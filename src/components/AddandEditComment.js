@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import {
   Modal, Button, Header, Form, TextArea, Container, Input
 } from 'semantic-ui-react'
@@ -7,8 +8,8 @@ import { saveComment, updateComment } from '../actions'
 
 class AddandEditComment extends Component {
   constructor(props) {
-    super(props);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    super(props)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   state = { modalOpen: false }
@@ -29,7 +30,7 @@ class AddandEditComment extends Component {
   }
 
   render() {
-
+    
     return (
 
       <Modal
@@ -66,15 +67,26 @@ class AddandEditComment extends Component {
             </Container>
           </Form>
         </Modal.Content>
-
       </Modal>
 
     );
   }
 }
 
+AddandEditComment.propTypes = {
+  id: PropTypes.string,
+  parentId: PropTypes.string.isRequired,
+  icon: PropTypes.string.isRequired,
+  buttonContent: PropTypes.string.isRequired,
+  color: PropTypes.string.isRequired,
+  content: PropTypes.string.isRequired,
+  body: PropTypes.string,
+  author: PropTypes.string,
+  dispatch: PropTypes.func.isRequired
+}
+
 function mapStateToProps (store) {
-  return {dispatch: store.dispatch }
+  return { dispatch: store.dispatch }
 }
 
 export default connect(mapStateToProps)(AddandEditComment);

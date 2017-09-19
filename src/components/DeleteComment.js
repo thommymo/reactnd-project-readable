@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import {
   Button
 } from 'semantic-ui-react'
@@ -23,6 +24,11 @@ class DeleteComment  extends Component {
       />
     )
   }
+}
+
+DeleteComment.propTypes = {
+  commentId: PropTypes.string.isRequired,
+  parentId: PropTypes.string.isRequired
 }
 
 function mapStateToProps (store) {

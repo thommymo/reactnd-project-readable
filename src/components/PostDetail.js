@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types'
 import { Post } from './Post'
 import {
   Grid, Container, Button, Header, Menu, Divider, Segment
@@ -98,6 +99,12 @@ class PostDetail extends Component {
       </Container>
     );
   }
+}
+
+PostDetail.propTypes = {
+  posts: PropTypes.object.isRequired,
+  comments: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired
 }
 
 function mapStateToProps (store) {

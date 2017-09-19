@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Grid, Menu, Button, Dropdown } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { Post } from './Post'
@@ -90,6 +91,15 @@ class Posts extends Component {
 
     )
   }
+}
+
+Posts.propTypes = {
+  categories: PropTypes.object.isRequired,
+  posts: PropTypes.object.isRequired,
+  comments: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  dispatch: PropTypes.func.isRequired
 }
 
 function mapStateToProps (store) {

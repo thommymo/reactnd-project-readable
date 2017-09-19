@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types'
 import {
   Button
 } from 'semantic-ui-react'
@@ -26,6 +27,11 @@ class DeletePost extends Component {
       />
     )
   }
+}
+
+DeletePost.propTypes = {
+  postid: PropTypes.string.isRequired,
+  history: PropTypes.object.isRequired
 }
 
 function mapStateToProps (store) {

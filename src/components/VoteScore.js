@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import {
   Button
 } from 'semantic-ui-react'
@@ -21,6 +22,13 @@ class VoteScore extends Component {
       </Button.Group>
     )
   }
+}
+
+VoteScore.propTypes = {
+  voteScore: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
+  posttype: PropTypes.string.isRequired,
+  dispatch: PropTypes.func.isRequired
 }
 
 function mapStateToProps (store) {

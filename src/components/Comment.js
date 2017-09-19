@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types'
 import {
   Grid, Container, Button, Label, Divider
 } from 'semantic-ui-react'
@@ -54,4 +55,8 @@ export function Comment (props) {
         </Grid.Row>
       </Grid>
   )
+}
+
+Comment.propTypes = {
+  comment: PropTypes.object.isRequired
 }
