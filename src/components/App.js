@@ -16,6 +16,7 @@ class App extends Component {
   }
 
   render() {
+    console.log(this.props.match)
     return (
       <Container>
 
@@ -29,7 +30,7 @@ class App extends Component {
         }
         <Route  path="/" exact component={Posts} />
         <Route  path="/:category" exact component={Posts} />
-        <Route  path="/:category/:id" exact component={PostDetail} />
+        <Route  path="/:category/:id" exact component={PostDetail}/>
       </Container>
     );
   }

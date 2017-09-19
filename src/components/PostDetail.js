@@ -12,15 +12,21 @@ import { Comment } from './Comment'
 
 class PostDetail extends Component {
 
-  render() {
-    //TODO: Move this into props. This does not make sense here. Instead turn this into a static componoent
-    //TODO: Sort Comments DESC Date
-    let post = this.props.posts.items.filter((post) => (post.id === this.props.match.params.id))
-    post = post[0]
-
+  getPost(){
+    const post = this.props.posts.items.filter((post) => (post.id === this.props.match.params.id))
+    return post[0]
+  }
+  getComments(){
     let comments = 0
     if (this.props.comments.items)
       comments = this.props.comments.items.filter((comment) => (comment.parentId === this.props.match.params.id))
+
+    return comments
+  }
+
+  render() {
+    const post = this.getPost()
+    const comments = this.getComments()
 
     return (
       <Container>
@@ -121,7 +127,7 @@ class PostDetail extends Component {
 }
 
 function mapStateToProps (store) {
-  return {posts: store.posts, comments: store.comments, dispatch: store.dispatch }
+  return {posts: store.posts, comments: store.comments }
 }
 
 export default connect(mapStateToProps)(PostDetail);
