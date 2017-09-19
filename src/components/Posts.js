@@ -14,7 +14,7 @@ class Posts extends Component {
   */
 
   state = {
-    activeCategoryItem: 'all'
+    activeCategoryItem: 'All categories'
   }
 
   handleCategoryItemClick = (e, { name }) => {
@@ -45,8 +45,23 @@ class Posts extends Component {
               <Menu.Item>
                 <AddAndEditPost content="Add Post" icon="plus"/>
               </Menu.Item>
-
               <Menu.Item  position='right'>
+                <Menu.Menu>
+
+                  <Dropdown item text={activeCategoryItem} icon='filter'>
+                    <Dropdown.Menu>
+                      <Dropdown.Item name='All categories' content='All categories' active={activeCategoryItem === "All categories"} onClick={this.handleCategoryItemClick} />
+
+                      { this.props.categories.items.map((c) => (
+                        <Dropdown.Item key={c.name} name={c.name} content={c.name} active={c.name === activeCategoryItem} onClick={this.handleCategoryItemClick}/>
+                      ))}
+
+                    </Dropdown.Menu>
+                  </Dropdown>
+
+                </Menu.Menu>
+              </Menu.Item>
+              <Menu.Item>
                 <Button.Group>
                   <Button icon="sort numeric descending" name='timestamp' positive={sortValue === "timestamp"} onClick={this.handleOrderByItemClick} size='mini' content='Date' />
                   <Button.Or text='or' size='mini'/>
@@ -54,20 +69,7 @@ class Posts extends Component {
                 </Button.Group>
               </Menu.Item>
 
-              <Menu.Menu>
 
-                <Dropdown item text='Categories'>
-                  <Dropdown.Menu>
-                    <Dropdown.Item name='all' content='All categories' active={activeCategoryItem === "all"} onClick={this.handleCategoryItemClick} />
-
-                    { this.props.categories.items.map((c) => (
-                      <Dropdown.Item key={c.name} name={c.name} content={c.name} active={c.name === activeCategoryItem} onClick={this.handleCategoryItemClick}/>
-                    ))}
-
-                  </Dropdown.Menu>
-                </Dropdown>
-
-              </Menu.Menu>
 
             </Menu>
           </Grid.Column>
@@ -79,7 +81,7 @@ class Posts extends Component {
               // TODO: Maybe it's better to Listen to the category param from react-router-dom
             }
 
-            { this.props.posts.items.filter((post) => (activeCategoryItem === "all" || post.category===activeCategoryItem)).map((post) => (
+            { this.props.posts.items.filter((post) => (activeCategoryItem === "All categories" || post.category===activeCategoryItem)).map((post) => (
               <Post key={post.id} post={post} comments={this.props.comments.items.filter((comment) => (comment.parentId === post.id))}/>
             )) }
 

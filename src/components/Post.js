@@ -47,7 +47,12 @@ export function Post(props){
                   {date}
                 </Label.Detail>
               </Label>
-              {comments &&
+              {comments && comments.length === 1 &&
+                <Label>
+                  {`${comments.length} comment`}
+                </Label>
+              }
+              {comments && comments.length !== 1 &&
                 <Label>
                   {`${comments.length} comments`}
                 </Label>
