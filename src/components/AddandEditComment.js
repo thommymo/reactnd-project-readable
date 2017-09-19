@@ -31,7 +31,7 @@ class AddandEditComment extends Component {
     this.setState({
       [name]: value
     })
-    if(value === "" || this.state.body === "" || this.state.author === ""){
+    if(value === "" || (this.state.body === "" && name !== "body") || (this.state.author === "" && name !== "author")){
       this.setState({ submit: false })
     } else{
       this.setState({ submit: true })
@@ -48,7 +48,6 @@ class AddandEditComment extends Component {
         author: "",
       })
     }
-
     this.handleClose()
     event.preventDefault()
   }

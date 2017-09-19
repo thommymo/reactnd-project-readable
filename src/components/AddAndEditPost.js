@@ -42,7 +42,13 @@ class AddAndEditPost extends Component {
       [name]: value
     })
     //Disable submit button if an entry is empty
-    if(value === "" || this.state.body === "" || this.state.author === "" || this.state.title === ""){
+    if(
+      value === "" ||
+      (this.state.body === "" && name !== "body") ||
+      (this.state.author === ""  && name !== "author") ||
+      (this.state.title === "" && name !== "title") || 
+      (this.state.category === "" && name !== "category" ))
+      {
       this.setState({ submit: false })
     } else{
       this.setState({ submit: true })
@@ -109,9 +115,9 @@ class AddAndEditPost extends Component {
               <select
                 name="category"
                 value={this.state.category}
-                placeholder="Add a Category"
                 onChange={this.handleInputChange}
               >
+                <option value="">Choose a Category</option>
                 {this.props.categories.map((option) => (
                   <option key={option.name} value={option.name}>Category: {option.name}</option>
                 ))}
