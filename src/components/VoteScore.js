@@ -15,7 +15,7 @@ class VoteScore extends Component {
   render(){
     return(
       <Button.Group size='mini'>
-        <Button size='mini' name='votescore'>VoteScore</Button>
+        <Button size='mini' name='votescore' disabled>VoteScore</Button>
         <Button name='upVote' onClick={this.handleVoteScoreClick} size='mini' icon='plus' />
         <Button.Or text={this.props.voteScore} size='mini'/>
         <Button name='downVote' onClick={this.handleVoteScoreClick} size='mini' icon='minus' />
