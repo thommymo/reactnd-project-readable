@@ -41,8 +41,8 @@ class AddAndEditPost extends Component {
     this.setState({
       [name]: value
     })
-    //Disable Submit Button if an entry is empty
-    if(value === "" || this.state.body === "" || this.state.author === ""){
+    //Disable submit button if an entry is empty
+    if(value === "" || this.state.body === "" || this.state.author === "" || this.state.title === ""){
       this.setState({ submit: false })
     } else{
       this.setState({ submit: true })
@@ -95,13 +95,13 @@ class AddAndEditPost extends Component {
               name="title"
               value={this.state.title}
               style={{ paddingBottom:20 }}
-              placeholder={this.state.placeholderTitle}
+              placeholder="Add a title"
               onChange={this.handleInputChange}
             />
             <TextArea
               name="body"
               value={this.state.body}
-              placeholder={this.state.placeholderBody}
+              placeholder="Add a text"
               style={{ minHeight:150 }}
               onChange={this.handleInputChange}
             />
@@ -109,11 +109,11 @@ class AddAndEditPost extends Component {
               <select
                 name="category"
                 value={this.state.category}
-                placeholder={this.state.placeholderCategory}
+                placeholder="Add a Category"
                 onChange={this.handleInputChange}
               >
                 {this.props.categories.map((option) => (
-                  <option key={option.name} value={option.name}>{option.name}</option>
+                  <option key={option.name} value={option.name}>Category: {option.name}</option>
                 ))}
               </select>
             </Container>
@@ -121,7 +121,7 @@ class AddAndEditPost extends Component {
               name="author"
               value={this.state.author}
               style={{ paddingTop:20 }}
-              placeholder={this.state.placeholderAuthor}
+              placeholder="Add an author"
               onChange={this.handleInputChange}
             />
             <Container textAlign='right' style={{ paddingTop:20 }}>

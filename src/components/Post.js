@@ -24,6 +24,7 @@ export function Post(props){
             <Grid.Column width={11}>
               { // Do only link the title in Post Overview page
                 props.id === undefined &&
+
                 <Link to={"/" + post.category + "/" + post.id}>
                   <Header as="h2">{post.title}</Header>
                 </Link>
