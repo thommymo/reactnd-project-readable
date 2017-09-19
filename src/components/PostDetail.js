@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Post from './Post'
+import { Post } from './Post'
 import {
   Grid, Container, Button, Header, Menu, Divider, Segment
 } from 'semantic-ui-react'

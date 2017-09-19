@@ -1,72 +1,65 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
   Grid, Header, Label, Container, Divider
 } from 'semantic-ui-react'
 import VoteScore from './VoteScore'
 import { Link } from 'react-router-dom'
 
+export function Post(props){
 
-//export function Post(props){}
+  const post = props.post
+  const comments = props.comments
 
-class Post extends Component {
+  let date = 0
+  const dateFromTimestamp = new Date(post.timestamp)
+  if (Object.prototype.toString.call(dateFromTimestamp) && isFinite(dateFromTimestamp))
+    date = Intl.DateTimeFormat().format(dateFromTimestamp)
 
-  render() {
-
-    //Check if timestamp generates a real date
-    //TODO: Refactor this, so I can use it as functional Component
-    let formattedDate = 0
-    const date = new Date(this.props.post.timestamp)
-    if(Object.prototype.toString.call(date) && isFinite(date))
-      formattedDate = new Intl.DateTimeFormat().format(date)
-
-    return (
-      <div className="Posts">
-        <Container>
-          <Grid>
-            <Grid.Row>
-              <Grid.Column width={11}>
-                { this.props.id === undefined &&
-                  <Link to={"/" + this.props.post.category + "/" + this.props.post.id}>
-                    <Header as="h2">{this.props.post.title}</Header>
-                  </Link>
-                }
-                { this.props.id !== undefined &&
-                  <Header as="h2">{this.props.post.title}</Header>
-                }
-              </Grid.Column>
-              <Grid.Column width={5}>
-                <Container textAlign="right">
-                  <VoteScore voteScore={this.props.post.voteScore} id={this.props.post.id} posttype="posts"/>
-                </Container>
-              </Grid.Column>
-            </Grid.Row>
-            <Grid.Row>
-              <Grid.Column width={16}>
-                <Label image>
-                  {this.props.post.author}
-                  <Label.Detail>
-                    {formattedDate}
-                  </Label.Detail>
+  return (
+    <div className="Posts">
+      <Container>
+        <Grid>
+          <Grid.Row>
+            <Grid.Column width={11}>
+              { // Do only link the title in Post Overview page
+                props.id === undefined &&
+                <Link to={"/" + post.category + "/" + post.id}>
+                  <Header as="h2">{post.title}</Header>
+                </Link>
+              }
+              { props.id !== undefined &&
+                <Header as="h2">{post.title}</Header>
+              }
+            </Grid.Column>
+            <Grid.Column width={5}>
+              <Container textAlign="right">
+                <VoteScore voteScore={post.voteScore} id={post.id} posttype="posts"/>
+              </Container>
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row>
+            <Grid.Column width={16}>
+              <Label image>
+                {post.author}
+                <Label.Detail>
+                  {date}
+                </Label.Detail>
+              </Label>
+              {comments &&
+                <Label>
+                  {`${comments.length} comments`}
                 </Label>
-                {this.props.comments &&
-                  <Label>
-                    {`${this.props.comments.length} comments`}
-                  </Label>
-                }
-              </Grid.Column>
-            </Grid.Row>
-            <Grid.Row>
-              <Grid.Column width={16}>
-                {this.props.post.body}
-                <Divider/>
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
-
-        </Container>
-      </div>
-    );
-  }
+              }
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row>
+            <Grid.Column width={16}>
+              {post.body}
+              <Divider/>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </Container>
+    </div>
+  );
 }
-
-export default (Post);

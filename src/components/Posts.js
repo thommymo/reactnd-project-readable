@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Grid, Menu, Button, Dropdown } from 'semantic-ui-react'
 import { connect } from 'react-redux'
-import Post from './Post'
+import { Post } from './Post'
 import { sortPosts } from '../actions'
 import AddAndEditPost from './AddAndEditPost'
 
