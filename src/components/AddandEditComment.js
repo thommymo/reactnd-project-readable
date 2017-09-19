@@ -9,28 +9,52 @@ import { saveComment, updateComment } from '../actions'
 class AddandEditComment extends Component {
   constructor(props) {
     super(props)
+    this.state = {
+      modalOpen: false,
+      body: this.props.body,
+      author: this.props.author,
+      submit: false
+    }
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleInputChange = this.handleInputChange.bind(this)
   }
-
-  state = { modalOpen: false }
 
   handleOpen = () => this.setState({ modalOpen: true })
 
   handleClose = () => this.setState({ modalOpen: false })
 
+  handleInputChange(event) {
+    const target = event.target
+    const value = target.value
+    const name = target.name
+
+    this.setState({
+      [name]: value
+    })
+    console.log(this.state.body)
+    if(value === "" || this.state.body === "" || this.state.author === ""){
+      this.setState({ submit: false })
+    } else{
+      this.setState({ submit: true })
+    }
+  }
+
   handleSubmit(event) {
     if(this.props.id){
-      this.props.dispatch(updateComment(this.props.id, this.props.parentId, this.textarea.ref.value, this.input.inputRef.value))
+      this.props.dispatch(updateComment(this.props.id, this.props.parentId, this.state.body, this.state.author))
     }else{
-      this.props.dispatch(saveComment(this.props.parentId, this.textarea.ref.value, this.input.inputRef.value))
+      this.props.dispatch(saveComment(this.props.parentId, this.state.body, this.state.author))
     }
-
+    this.setState({
+      body: "",
+      author: "",
+    })
     this.handleClose()
     event.preventDefault()
   }
 
   render() {
-    
+
     return (
 
       <Modal
@@ -51,19 +75,21 @@ class AddandEditComment extends Component {
         <Modal.Content>
           <Form onSubmit={this.handleSubmit}>
             <TextArea
-              defaultValue={this.props.body}
+              name="body"
+              value={this.state.body}
               placeholder='Add your comment'
               style={{ minHeight:150 }}
-              ref={(textarea) => this.textarea = textarea}
+              onChange={this.handleInputChange}
             />
             <Input
-              defaultValue={this.props.author}
+              name="author"
+              value={this.state.author}
               style={{ paddingTop:20 }}
               placeholder='Add your username'
-              ref={(input) => this.input = input}
+              onChange={this.handleInputChange}
             />
             <Container textAlign='right' style={{ paddingTop:20 }}>
-              <Button type='submit' inverted>Submit</Button>
+              <Button type='submit' inverted disabled={!this.state.submit}>Submit</Button>
             </Container>
           </Form>
         </Modal.Content>
@@ -72,6 +98,11 @@ class AddandEditComment extends Component {
     );
   }
 }
+
+AddandEditComment.defaultProps = {
+  body: "",
+  author: "",
+};
 
 AddandEditComment.propTypes = {
   id: PropTypes.string,
