@@ -1,6 +1,8 @@
 # My Project Readable for Udacity React Nanodegree
 
-This project was created during the Udacity React Nanodegree in September 2017.
+This project was created during the Udacity React Nanodegree in September 2017. It was created for learning reactjs, react-redux, react-router and how these elements work together.
+
+With the webapp you can create posts, create comments and vote for posts and comments.
 
 ## Getting Started
 
@@ -28,8 +30,6 @@ and
 npm start
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
-
 ## Built With
 
 * [React](https://facebook.github.io/react/) - The web framework used
@@ -44,9 +44,3 @@ End with an example of getting some data out of the system or using it for a lit
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone who's code was used
-* Inspiration
-* etc
