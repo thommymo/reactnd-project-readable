@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types'
 import {
-  Grid, Header, Label, Container, Divider
+  Grid, Header, Label, Container, Divider, Menu, Button
 } from 'semantic-ui-react'
 import VoteScore from './VoteScore'
 import { Link } from 'react-router-dom'
+import AddAndEditPost from './AddAndEditPost'
+import DeletePost from './DeletePost'
 
 export function Post(props){
 
@@ -21,8 +23,8 @@ export function Post(props){
       <Container>
         <Grid>
           <Grid.Row>
-            <Grid.Column width={11}>
-              { // Do only link the title in Post Overview page
+            <Grid.Column width={8}>
+              { // Do only link the title on Post Overview page
                 props.id === undefined &&
 
                 <Link to={"/" + post.category + "/" + post.id}>
@@ -33,10 +35,27 @@ export function Post(props){
                 <Header as="h2">{post.title}</Header>
               }
             </Grid.Column>
-            <Grid.Column width={5}>
+            <Grid.Column width={8}>
               <Container textAlign="right">
                 <VoteScore voteScore={post.voteScore} id={post.id} posttype="posts"/>
+                
+                {// Do only link show the edit and Delete Button on on Post Overview page
+                  post && props.id === undefined &&
+                  <Button.Group size="mini">
+                    <AddAndEditPost
+                      content="Edit"
+                      icon="edit"
+                      postid={post.id}
+                      body={post.body}
+                      title={post.title}
+                      author={post.author}
+                      category={post.category}
+                    />
+                    <DeletePost postid={post.id}/>
+                  </Button.Group>
+                }
               </Container>
+
             </Grid.Column>
           </Grid.Row>
           <Grid.Row>

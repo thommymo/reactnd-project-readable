@@ -69,8 +69,6 @@ class Posts extends Component {
                 </Button.Group>
               </Menu.Item>
 
-
-
             </Menu>
           </Grid.Column>
         </Grid.Row>
