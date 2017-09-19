@@ -1,15 +1,24 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
 import {
-  Modal, Button, Header, Form, TextArea, Container, Input, Dropdown
+  Modal, Button, Header, Form, TextArea, Container, Input
 } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { savePost, updatePost } from '../actions'
 
 class AddAndEditPost extends Component {
   constructor(props) {
-    super(props);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    super(props)
+    this.state = {
+      modalOpen: false,
+      title: this.props.title,
+      body: this.props.body,
+      author: this.props.author,
+      category: this.props.category,
+      submit: false
+    }
+    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleInputChange = this.handleInputChange.bind(this)
   }
 
   state = {
@@ -24,56 +33,46 @@ class AddAndEditPost extends Component {
 
   handleClose = () => this.setState({ modalOpen: false })
 
+  handleInputChange(event) {
+    const target = event.target
+    const value = target.value
+    const name = target.name
+
+    this.setState({
+      [name]: value
+    })
+    //Disable Submit Button if an entry is empty
+    if(value === "" || this.state.body === "" || this.state.author === ""){
+      this.setState({ submit: false })
+    } else{
+      this.setState({ submit: true })
+    }
+  }
+
   handleSubmit(event) {
-    //Check if input elements are not empty
     const postid = this.props.postid
-    const title = this.title.inputRef.value
-    const body = this.body.ref.value
-    const category = this.category.state.value
-    const author = this.author.inputRef.value
-    let error = false
+    const title = this.state.title
+    const body = this.state.body
+    const category = this.state.category
+    const author = this.state.author
 
-    if(title === ""){
-      error = true
-      this.setState({ placeholderTitle: "Error: Please add a title" })
+    if(postid){
+      this.props.dispatch(updatePost(postid, title, body, category, author))
+    }else{
+      this.props.dispatch(savePost(title, body, category, author))
+      this.setState({
+        title: "",
+        body: "",
+        author: "",
+        category: "",
+      })
     }
-    if(body === ""){
-      error = true
-      this.setState({ placeholderBody: "Error: Please add a body" })
-    }
-    if(category === ""){
-      error = true
-      this.setState({ placeholderCategory: "Error: Please choose a category" })
-    }
-    if(author === ""){
-      error = true
-      this.setState({ placeholderAuthor: "Error: Please choose a author" })
-    }
-    if(!error){
-      console.log(postid);
-      if(postid){
-        this.props.dispatch(updatePost(postid, title, body, category, author))
-      }else{
-        this.props.dispatch(savePost(title, body, category, author))
-      }
-      this.handleClose()
-    }
+    this.handleClose()
     event.preventDefault()
-
   }
 
   render() {
-
-    const options = this.props.categories.map(
-      (category) => ({
-        key: category.name,
-        text: category.name,
-        value: category.name
-      }))
-
-
     return (
-
       <Modal
         trigger={
           <Button
@@ -93,39 +92,53 @@ class AddAndEditPost extends Component {
         <Modal.Content>
           <Form onSubmit={this.handleSubmit}>
             <Input
-              defaultValue={this.props.title}
+              name="title"
+              value={this.state.title}
               style={{ paddingBottom:20 }}
               placeholder={this.state.placeholderTitle}
-              ref={(title) => this.title = title}/>
+              onChange={this.handleInputChange}
+            />
             <TextArea
-              defaultValue={this.props.body}
+              name="body"
+              value={this.state.body}
               placeholder={this.state.placeholderBody}
               style={{ minHeight:150 }}
-              ref={(body) => this.body = body}
+              onChange={this.handleInputChange}
             />
             <Container style={{ paddingTop:20 }}>
-              <Dropdown
-                defaultValue={this.props.category}
-                options={options}
-                selection
+              <select
+                name="category"
+                value={this.state.category}
                 placeholder={this.state.placeholderCategory}
-                ref={(category) => this.category = category}
-              />
+                onChange={this.handleInputChange}
+              >
+                {this.props.categories.map((option) => (
+                  <option key={option.name} value={option.name}>{option.name}</option>
+                ))}
+              </select>
             </Container>
             <Input
-              defaultValue={this.props.author}
+              name="author"
+              value={this.state.author}
               style={{ paddingTop:20 }}
               placeholder={this.state.placeholderAuthor}
-              ref={(author) => this.author = author}
+              onChange={this.handleInputChange}
             />
             <Container textAlign='right' style={{ paddingTop:20 }}>
-              <Button type='submit' inverted>Submit</Button>
+              <Button type='submit' inverted disabled={!this.state.submit}>Submit</Button>
             </Container>
           </Form>
         </Modal.Content>
       </Modal>
     )
   }
+}
+
+AddAndEditPost.defaultProps = {
+  body: "",
+  author: "",
+  title: "",
+  category: ""
 }
 
 AddAndEditPost.propTypes = {

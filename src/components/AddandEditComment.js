@@ -31,7 +31,6 @@ class AddandEditComment extends Component {
     this.setState({
       [name]: value
     })
-    console.log(this.state.body)
     if(value === "" || this.state.body === "" || this.state.author === ""){
       this.setState({ submit: false })
     } else{
@@ -44,11 +43,12 @@ class AddandEditComment extends Component {
       this.props.dispatch(updateComment(this.props.id, this.props.parentId, this.state.body, this.state.author))
     }else{
       this.props.dispatch(saveComment(this.props.parentId, this.state.body, this.state.author))
+      this.setState({
+        body: "",
+        author: "",
+      })
     }
-    this.setState({
-      body: "",
-      author: "",
-    })
+
     this.handleClose()
     event.preventDefault()
   }
@@ -102,7 +102,7 @@ class AddandEditComment extends Component {
 AddandEditComment.defaultProps = {
   body: "",
   author: "",
-};
+}
 
 AddandEditComment.propTypes = {
   id: PropTypes.string,
