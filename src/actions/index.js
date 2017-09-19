@@ -6,6 +6,54 @@ export const RECEIVE_CATEGORIES = 'RECEIVE_CATEGORIES'
 export const REQUEST_COMMENTS = 'REQUEST_COMMENTS'
 export const RECEIVE_COMMENTS = 'RECEIVE_COMMENTS'
 export const CHANGE_VOTE_SCORE = 'CHANGE_VOTE_SCORE'
+export const UPDATE_EDITED_COMMENT = 'UPDATE_EDITED_COMMENT'
+export const ADD_NEW_COMMENT = 'ADD_NEW_COMMENT'
+export const REMOVE_COMMENT = 'REMOVE_COMMENT'
+export const REMOVE_POST = 'REMOVE_POST'
+export const ADD_POST = 'ADD_POST'
+export const UPDATE_EDITED_POST = 'UPDATE_EDITED_POST'
+
+export function updateEditedPost (post) {
+  return {
+    type: UPDATE_EDITED_POST,
+    post: post
+  }
+}
+
+export function addPost (post) {
+  return {
+    type: ADD_POST,
+    post: post
+  }
+}
+
+export function removePost (post){
+  return {
+    type: REMOVE_POST,
+    post: post
+  }
+}
+
+export function removeComment (comment){
+  return{
+    type: REMOVE_COMMENT,
+    comment: comment
+  }
+}
+
+export function addNewComment (comment){
+  return {
+    type: ADD_NEW_COMMENT,
+    comment: comment
+  }
+}
+
+export function updateEditedComment (comment){
+  return {
+    type: UPDATE_EDITED_COMMENT,
+    comment: comment
+  }
+}
 
 export function changeVoteScore (id, value){
   return {
@@ -14,6 +62,7 @@ export function changeVoteScore (id, value){
     value: value
   }
 }
+
 export function requestComments(){
   return {
     type: REQUEST_COMMENTS
@@ -62,7 +111,6 @@ export function sortPosts(sortValue, sortOrder){
   }
 }
 
-
 //these variables are for communicating with the API
 
 const api = process.env.REACT_APP_CONTACTS_API_URL || 'http://localhost:3001'
@@ -75,11 +123,17 @@ const headers = {
  'Content-Type': 'application/json'
 }
 
-// All the following functions are thunk middlware.
+function uuidv4() {
+  return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+    ((c ^ (crypto.getRandomValues(new Uint8Array(1))[0] & 15)) >> c / 4).toString(16)
+  )
+}
 
-// The implementation is based on: http://redux.js.org/docs/advanced/AsyncActions.html
-
-// I left the comments on the first thunk middleware function to understand what happens when and how
+/*
+All the following functions are thunk middlware.
+The implementation is based on: http://redux.js.org/docs/advanced/AsyncActions.html
+I left the comments on the first thunk middleware function to understand what happens here.
+*/
 
 export function fetchCategories() {
   // Thunk middleware knows how to handle functions.
@@ -123,9 +177,7 @@ export function fetchPosts(postid = undefined) {
           response => response.json(),
           error => console.log('An error occured.', error)
         )
-        .then(json =>
-          dispatch(receivePosts(json))
-        )
+        .then(json => dispatch(receivePosts(json)))
     }
 }
 
@@ -155,17 +207,10 @@ export function fetchComments(id) {
         response => response.json(),
         error => console.log('An error occured.', error)
       )
-      .then(json =>
-        dispatch(receiveComments(id, json))
-      )
+      .then(json => dispatch(receiveComments(id, json)))
   }
 }
 
-function uuidv4() {
-  return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
-    ((c ^ (crypto.getRandomValues(new Uint8Array(1))[0] & 15)) >> c / 4).toString(16)
-  )
-}
 export function saveComment(parentId, body, author){
   return function (dispatch) {
       let data = {
@@ -179,9 +224,9 @@ export function saveComment(parentId, body, author){
         headers ,
         body: JSON.stringify(data),
         method: 'POST',
-      }).then((res) => (res.json())).then(() =>
-        dispatch(fetchComments(parentId)))
-
+      })
+      .then((res) => (res.json()))
+      .then((json) => dispatch(addNewComment(json)))
     }
 }
 export function updateComment(id, parentId, body, author){
@@ -195,9 +240,9 @@ export function updateComment(id, parentId, body, author){
         headers ,
         body: JSON.stringify(data),
         method: 'PUT',
-      }).then((res) => (res.json())).then(() =>
-        dispatch(fetchComments(parentId)))
-
+      })
+      .then((res) => (res.json()))
+      .then(json => dispatch(updateEditedComment(json)))
     }
 }
 export function updatePost(id, title, body, category, author){
@@ -212,8 +257,9 @@ export function updatePost(id, title, body, category, author){
         headers ,
         body: JSON.stringify(data),
         method: 'PUT',
-      }).then((res) => (res.json())).then(() =>
-        dispatch(fetchPosts()))
+      })
+      .then((res) => (res.json()))
+      .then((json) => dispatch(updateEditedPost(json)))
     }
 }
 export function savePost(title, body, category, author){
@@ -230,9 +276,9 @@ export function savePost(title, body, category, author){
         headers ,
         body: JSON.stringify(data),
         method: 'POST',
-      }).then((res) => (res.json())).then(() =>
-        dispatch(fetchPosts()))
-
+      })
+      .then((res) => (res.json()))
+      .then((json) => dispatch(addPost(json)))
     }
 }
 export function deletePost(id){
@@ -240,8 +286,9 @@ export function deletePost(id){
       fetch(`${api}/posts/${id}`, {
         headers ,
         method: 'DELETE',
-      }).then((res) => (res.json())).then(() =>
-        dispatch(fetchPosts()))
+      })
+      .then((res) => (res.json()))
+      .then((json) => dispatch(removePost(json)))
     }
 }
 export function deleteComment(id, parentId){
@@ -249,8 +296,9 @@ export function deleteComment(id, parentId){
       fetch(`${api}/comments/${id}`, {
         headers ,
         method: 'DELETE',
-      }).then((res) => (res.json())).then(() =>
-        dispatch(fetchComments(parentId)))
+      })
+      .then((res) => (res.json()))
+      .then((json) => dispatch(removeComment(json)))
     }
 }
 
@@ -264,8 +312,9 @@ export function saveVote(id, vote, posttype){
           headers ,
           body: JSON.stringify(data),
           method: 'POST',
-        }).then((res) => (res.json())).then(() =>
-          dispatch(changeVoteScore(id, vote)))
+        })
+        .then((res) => (res.json()))
+        .then(() => dispatch(changeVoteScore(id, vote)))
       }
     }
 }

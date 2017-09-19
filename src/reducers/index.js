@@ -8,7 +8,13 @@ import {
   RECEIVE_CATEGORIES,
   REQUEST_COMMENTS,
   RECEIVE_COMMENTS,
-  CHANGE_VOTE_SCORE
+  CHANGE_VOTE_SCORE,
+  UPDATE_EDITED_COMMENT,
+  ADD_NEW_COMMENT,
+  REMOVE_COMMENT,
+  REMOVE_POST,
+  ADD_POST,
+  UPDATE_EDITED_POST
 } from '../actions'
 
 const initialCategoriesState = {
@@ -36,7 +42,6 @@ const initialPostsState = {
   isFetching: false,
   isFetchingComments: false,
   sortValue: 'voteScore',
-  sortOrder: 'arrow up',
   items: []
 }
 
@@ -59,15 +64,28 @@ function posts (state = initialPostsState, action) {
       } else {
         return state
       }
+    case ADD_POST:
+      return Object.assign({}, state, {
+        items: state.items.concat(action.post).sort((a, b) => (b[state.sortValue]-a[state.sortValue]))
+      })
+    case REMOVE_POST:
+      return Object.assign({}, state, {
+        items: state.items.filter((post) => (post.id !== action.post.id))
+      })
     case RECEIVE_POSTS:
       return Object.assign({}, state, {
         isFetching: false,
         items: action.posts.sort((a, b) => (b[state.sortValue]-a[state.sortValue]))
       })
+    case UPDATE_EDITED_POST:
+      const newitems = state.items.filter((post) => (post.id !== action.post.id))
+      return Object.assign({}, state, {
+        isFetching: false,
+        items: newitems.concat(action.post).sort((a, b) => (b[state.sortValue]-a[state.sortValue]))
+      })
     case SORT_POSTS:
       return Object.assign({}, state, {
         sortValue: action.sortValue,
-        sortOrder: action.sortOrder,
         items: state.items.sort((a, b) => (b[action.sortValue]-a[action.sortValue]))
       })
     default:
@@ -98,15 +116,24 @@ function comments (state = initialCommentsState, action) {
       return Object.assign({}, state, {
         isFetchingComments: true
       })
-    case RECEIVE_COMMENTS:
-      let newitems = state.items.filter((comment) => (comment.parentId !== action.postid))
-      newitems = newitems.concat(action.comments)
+    case UPDATE_EDITED_COMMENT:
+      const newitem = state.items.filter((comment) => (comment.id !== action.comment.id))
       return Object.assign({}, state, {
         isFetchingComments: false,
-        // return items only if the items are not in the array yet.
-        items: newitems.sort((a, b) => (b.timestamp-a.timestamp))
-
-
+        items: newitem.concat(action.comment).sort((a, b) => (b.timestamp-a.timestamp))
+      })
+    case ADD_NEW_COMMENT:
+      return Object.assign({}, state, {
+        items: state.items.concat(action.comment).sort((a, b) => (b.timestamp-a.timestamp))
+      })
+    case REMOVE_COMMENT:
+      return Object.assign({}, state, {
+        items: state.items.filter((comment) => (comment.id !== action.comment.id))
+      })
+    case RECEIVE_COMMENTS:
+      return Object.assign({}, state, {
+        isFetchingComments: false,
+        items: state.items.concat(action.comments).sort((a, b) => (b.timestamp-a.timestamp))
       })
     default:
       return state
