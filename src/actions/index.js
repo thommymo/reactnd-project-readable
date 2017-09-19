@@ -42,12 +42,11 @@ export function receiveCategories(json){
 }
 
 const api = process.env.REACT_APP_CONTACTS_API_URL || 'http://localhost:3001'
-let token = localStorage.token = 'whatever'
+let token = localStorage.token
 if (!token)
- token = localStorage.token = 'whatever'
+ token = localStorage.token = uuidv4(new Date().getTime())
 
 const headers = {
-
  'Authorization': token,
  'Content-Type': 'application/json'
 }
