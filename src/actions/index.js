@@ -41,6 +41,30 @@ export function receiveCategories(json){
   }
 }
 
+export function requestPosts(){
+  return {
+    type: REQUEST_POSTS
+  }
+}
+
+export function receivePosts(json){
+  return {
+    type: RECEIVE_POSTS,
+    posts: json
+  }
+}
+
+export function sortPosts(sortValue, sortOrder){
+  return {
+    type: SORT_POSTS,
+    sortValue: sortValue,
+    sortOrder: sortOrder
+  }
+}
+
+
+//these variables are for communicating with the API
+
 const api = process.env.REACT_APP_CONTACTS_API_URL || 'http://localhost:3001'
 let token = localStorage.token
 if (!token)
@@ -51,17 +75,11 @@ const headers = {
  'Content-Type': 'application/json'
 }
 
-//TODO: Here another action would be required: What happens, when there is an error when requesting or receiveing categories: http://redux.js.org/docs/advanced/AsyncActions.htmls
+// All the following functions are thunk middlware.
 
+// The implementation is based on: http://redux.js.org/docs/advanced/AsyncActions.html
 
-// START COPIED FROM HERE: http://redux.js.org/docs/advanced/AsyncActions.html
-
-// Meet our first thunk action creator!
-// Though its insides are different, you would use it just like any other action creator:
-// store.dispatch(fetchPosts('reactjs'))
-
-//TODO: What does  process.env.REACT_APP_CONTACTS_API_URL  really do?
-
+// I left the comments on the first thunk middleware function to understand what happens when and how
 
 export function fetchCategories() {
   // Thunk middleware knows how to handle functions.
@@ -74,13 +92,11 @@ export function fetchCategories() {
 
     dispatch(requestCategories())
 
-
     // The function called by the thunk middleware can return a value,
     // that is passed on as the return value of the dispatch method.
 
     // In this case, we return a promise to wait for.
     // This is not required by thunk middleware, but it is convenient for us.
-
     fetch(`${api}/categories`, { method: 'GET', headers })
       .then(
         response => response.json(),
@@ -93,24 +109,8 @@ export function fetchCategories() {
       .then(json =>
         // We can dispatch many times!
         // Here, we update the app state with the results of the API call.
-
         dispatch(receiveCategories(json))
       )
-  }
-}
-
-// END COPIED FROM HERE: http://redux.js.org/docs/advanced/AsyncActions.html
-
-export function requestPosts(){
-  return {
-    type: REQUEST_POSTS
-  }
-}
-
-export function receivePosts(json){
-  return {
-    type: RECEIVE_POSTS,
-    posts: json
   }
 }
 
@@ -268,12 +268,4 @@ export function saveVote(id, vote, posttype){
           dispatch(changeVoteScore(id, vote)))
       }
     }
-}
-
-export function sortPosts(sortValue, sortOrder){
-  return {
-    type: SORT_POSTS,
-    sortValue: sortValue,
-    sortOrder: sortOrder
-  }
 }

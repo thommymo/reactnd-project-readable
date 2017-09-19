@@ -18,15 +18,6 @@ class App extends Component {
   render() {
     return (
       <Container>
-
-        {
-          /*
-          TODO: From time to time I should fetch new Posts, since somebody else could have updated the posts in
-          the Database. If I do not fetch posts or comments from time to time, this user
-          will never see new items.
-          Now it might be good to fetch only posts, which are new or have been updated.
-          */
-        }
         <Route  path="/" exact component={Posts} />
         <Route  path="/:category" exact component={Posts} />
         <Route  path="/:category/:id" exact component={PostDetail}/>
