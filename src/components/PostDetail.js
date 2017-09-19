@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
 import Post from './Post'
 import {
-  Grid, Container, Button, Header, Label, Menu, Divider, Segment
+  Grid, Container, Button, Header, Menu, Divider, Segment
 } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { fetchComments } from '../actions'
-import VoteScore from './VoteScore'
 import AddandEditComment from './AddandEditComment'
 import AddAndEditPost from './AddAndEditPost'
 import DeletePost from './DeletePost'
-import DeleteComment from './DeleteComment'
+import { Comment } from './Comment'
 
 class PostDetail extends Component {
 
@@ -113,53 +111,7 @@ class PostDetail extends Component {
 
         { comments && comments.map((comment) => (
 
-          <Grid key={comment.id} padded >
-
-            <Grid.Row >
-
-              <Grid.Column width={8}>
-                <Label image>
-                  {comment.author}
-                  { //Check if comment.timestamp is a date
-                    Object.prototype.toString.call(new Date(comment.timestamp)) && isFinite(new Date(comment.timestamp)) &&
-                    <Label.Detail>
-
-                      { new Intl.DateTimeFormat().format(new Date(comment.timestamp)) }
-
-                    </Label.Detail>
-                  }
-                </Label>
-              </Grid.Column>
-              <Grid.Column width={8}>
-                <Container textAlign='right'>
-                  <VoteScore voteScore={comment.voteScore} id={comment.id} posttype="comments" />
-                  <Button.Group size='mini'>
-                    <AddandEditComment
-                      parentId={comment.parentId}
-                      id={comment.id}
-                      author={comment.author}
-                      body={comment.body}
-                      buttonContent="Edit"
-                      content="Edit"
-                      color="blue"
-                      icon="edit"
-                    />
-                    <DeleteComment commentId={comment.id} parentId={comment.parentId}/>
-                  </Button.Group>
-                </Container>
-              </Grid.Column>
-
-            </Grid.Row>
-            <Grid.Row>
-              <Grid.Column width={16}>
-
-                <p>{comment.body}</p>
-                <Divider/>
-              </Grid.Column>
-
-
-            </Grid.Row>
-          </Grid>
+          <Comment comment={comment} key={comment.id} />
 
         )) }
 

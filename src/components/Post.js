@@ -5,12 +5,15 @@ import {
 import VoteScore from './VoteScore'
 import { Link } from 'react-router-dom'
 
+
+//export function Post(props){}
+
 class Post extends Component {
 
   render() {
 
     //Check if timestamp generates a real date
-    //TODO: Refactor this, so I can use it as "Stupid" Component
+    //TODO: Refactor this, so I can use it as functional Component
     let formattedDate = 0
     const date = new Date(this.props.post.timestamp)
     if(Object.prototype.toString.call(date) && isFinite(date))
@@ -48,8 +51,6 @@ class Post extends Component {
                 {this.props.comments &&
                   <Label>
                     {`${this.props.comments.length} comments`}
-
-
                   </Label>
                 }
               </Grid.Column>
