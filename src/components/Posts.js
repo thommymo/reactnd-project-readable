@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { Post } from './Post'
 import { sortPosts } from '../actions'
 import AddAndEditPost from './AddAndEditPost'
+import PostsMenu from './PostsMenu'
 
 class Posts extends Component {
 
@@ -40,36 +41,12 @@ class Posts extends Component {
       <Grid padded>
         <Grid.Row>
           <Grid.Column width={16}>
-            <Menu size='small'>
-
-              <Menu.Item>
-                <AddAndEditPost content="Add Post" icon="plus"/>
-              </Menu.Item>
-              <Menu.Item  position='right'>
-                <Menu.Menu>
-
-                  <Dropdown item text={activeCategoryItem} icon='filter'>
-                    <Dropdown.Menu>
-                      <Dropdown.Item name='All categories' content='All categories' active={activeCategoryItem === "All categories"} onClick={this.handleCategoryItemClick} />
-
-                      { this.props.categories.items.map((c) => (
-                        <Dropdown.Item key={c.name} name={c.name} content={c.name} active={c.name === activeCategoryItem} onClick={this.handleCategoryItemClick}/>
-                      ))}
-
-                    </Dropdown.Menu>
-                  </Dropdown>
-
-                </Menu.Menu>
-              </Menu.Item>
-              <Menu.Item>
-                <Button.Group>
-                  <Button icon="sort numeric descending" name='timestamp' positive={sortValue === "timestamp"} onClick={this.handleOrderByItemClick} size='mini' content='Date' />
-                  <Button.Or text='or' size='mini'/>
-                  <Button icon='sort numeric descending' name='voteScore' positive={sortValue === "voteScore"} onClick={this.handleOrderByItemClick} size='mini' content='Vote'  />
-                </Button.Group>
-              </Menu.Item>
-
-            </Menu>
+            <PostsMenu
+              handleCategoryItemClick={this.handleCategoryItemClick}
+              handleOrderByItemClick={this.handleOrderByItemClick}
+              category={this.props.match.params.category}
+              activeCategoryItem={activeCategoryItem}
+            />
           </Grid.Column>
         </Grid.Row>
         <Grid.Row>
@@ -84,11 +61,8 @@ class Posts extends Component {
             )) }
 
           </Grid.Column>
-
         </Grid.Row>
-
       </Grid>
-
     )
   }
 }

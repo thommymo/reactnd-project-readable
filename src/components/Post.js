@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types'
 import {
-  Grid, Header, Label, Container, Divider, Menu, Button
+  Grid, Header, Label, Container, Divider, Button
 } from 'semantic-ui-react'
 import VoteScore from './VoteScore'
 import { Link } from 'react-router-dom'
@@ -38,7 +38,7 @@ export function Post(props){
             <Grid.Column width={8}>
               <Container textAlign="right">
                 <VoteScore voteScore={post.voteScore} id={post.id} posttype="posts"/>
-                
+
                 {// Do only link show the edit and Delete Button on on Post Overview page
                   post && props.id === undefined &&
                   <Button.Group size="mini">

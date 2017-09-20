@@ -57,10 +57,7 @@ class AddAndEditPost extends Component {
 
   handleSubmit(event) {
     const postid = this.props.postid
-    const title = this.state.title
-    const body = this.state.body
-    const category = this.state.category
-    const author = this.state.author
+    const { title, body, category, author } = this.state
 
     if(postid){
       this.props.dispatch(updatePost(postid, title, body, category, author))

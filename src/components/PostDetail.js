@@ -17,6 +17,7 @@ class PostDetail extends Component {
     const post = this.props.posts.items.filter((post) => (post.id === this.props.match.params.id))
     return post[0]
   }
+  
   getComments(){
     let comments = 0
     if (this.props.comments.items)
