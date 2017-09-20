@@ -13,7 +13,6 @@ class DeleteComment  extends Component {
       this.props.dispatch(deleteComment(this.props.commentId, this.props.parentId))
     }
   }
-
   render() {
     return (
       <Button

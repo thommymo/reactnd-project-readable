@@ -14,12 +14,14 @@ import {
   REMOVE_COMMENT,
   REMOVE_POST,
   ADD_POST,
-  UPDATE_EDITED_POST
+  UPDATE_EDITED_POST,
+  UPDATE_CURRENT_CATEGORY
 } from '../actions'
 
 const initialCategoriesState = {
   isFetching: false,
-  items: []
+  items: [],
+  activeCategoryItem: "All categories"
 }
 
 function categories (state = initialCategoriesState, action) {
@@ -32,6 +34,14 @@ function categories (state = initialCategoriesState, action) {
       return Object.assign({}, state, {
         isFetching: false,
         items: action.categories
+      })
+    case UPDATE_CURRENT_CATEGORY:
+      return Object.assign({}, state, {
+        activeCategoryItem: action.activeCategoryItem
+      })
+    case ADD_POST:
+      return Object.assign({}, state, {
+        activeCategoryItem: initialCategoriesState.activeCategoryItem
       })
     default:
       return state
@@ -65,8 +75,10 @@ function posts (state = initialPostsState, action) {
         return state
       }
     case ADD_POST:
+      const sortValue = "timestamp"
       return Object.assign({}, state, {
-        items: state.items.concat(action.post).sort((a, b) => (b[state.sortValue]-a[state.sortValue]))
+        items: state.items.concat(action.post).sort((a, b) => (b[sortValue]-a[sortValue])),
+        sortValue: sortValue
       })
     case REMOVE_POST:
       return Object.assign({}, state, {

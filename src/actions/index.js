@@ -12,6 +12,15 @@ export const REMOVE_COMMENT = 'REMOVE_COMMENT'
 export const REMOVE_POST = 'REMOVE_POST'
 export const ADD_POST = 'ADD_POST'
 export const UPDATE_EDITED_POST = 'UPDATE_EDITED_POST'
+export const UPDATE_CURRENT_CATEGORY = 'UPDATE_CURRENT_CATEGORY'
+
+
+export function updateCurrentCategory (category) {
+  return {
+    type: UPDATE_CURRENT_CATEGORY,
+    activeCategoryItem: category
+  }
+}
 
 export function updateEditedPost (post) {
   return {

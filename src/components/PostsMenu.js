@@ -15,11 +15,11 @@ function PostsMenu (props) {
       </Menu.Item>
       <Menu.Item  position='right'>
         <Menu.Menu>
-          <Dropdown item text={props.activeCategoryItem} icon='filter'>
+          <Dropdown item text={props.categories.activeCategoryItem} icon='filter'>
             <Dropdown.Menu>
-              <Dropdown.Item name='All categories' content='All categories' active={props.activeCategoryItem === "All categories"} onClick={props.handleCategoryItemClick} />
+              <Dropdown.Item name='All categories' content='All categories' active={props.categories.activeCategoryItem === "All categories"} onClick={props.handleCategoryItemClick} />
               { props.categories.items.map((c) => (
-                <Dropdown.Item key={c.name} name={c.name} content={c.name} active={c.name === props.activeCategoryItem} onClick={props.handleCategoryItemClick}/>
+                <Dropdown.Item key={c.name} name={c.name} content={c.name} active={c.name === props.categories.activeCategoryItem} onClick={props.handleCategoryItemClick}/>
               ))}
             </Dropdown.Menu>
           </Dropdown>
@@ -40,8 +40,7 @@ PostsMenu.propTypes = {
   categories: PropTypes.object.isRequired,
   posts: PropTypes.object.isRequired,
   handleCategoryItemClick: PropTypes.func.isRequired,
-  handleOrderByItemClick: PropTypes.func.isRequired,
-  activeCategoryItem: PropTypes.string.isRequired
+  handleOrderByItemClick: PropTypes.func.isRequired
 }
 
 function mapStateToProps (store) {

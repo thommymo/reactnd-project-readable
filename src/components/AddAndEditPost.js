@@ -5,6 +5,7 @@ import {
 } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { savePost, updatePost } from '../actions'
+import { withRouter } from 'react-router-dom'
 
 class AddAndEditPost extends Component {
   constructor(props) {
@@ -62,6 +63,7 @@ class AddAndEditPost extends Component {
     if(postid){
       this.props.dispatch(updatePost(postid, title, body, category, author))
     }else{
+      this.props.history.push("/")
       this.props.dispatch(savePost(title, body, category, author))
       this.setState({
         title: "",
@@ -153,11 +155,11 @@ AddAndEditPost.propTypes = {
   category: PropTypes.string,
   title: PropTypes.string,
   dispatch: PropTypes.func.isRequired,
-  categories: PropTypes.array.isRequired
+  categories: PropTypes.array.isRequired,
 }
 
 function mapStateToProps (store) {
   return {dispatch: store.dispatch, categories: store.categories.items }
 }
 
-export default connect(mapStateToProps)(AddAndEditPost);
+export default withRouter(connect(mapStateToProps)(AddAndEditPost));

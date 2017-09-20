@@ -39,7 +39,7 @@ export function Post(props){
               <Container textAlign="right">
                 <VoteScore voteScore={post.voteScore} id={post.id} posttype="posts"/>
 
-                {// Do only link show the edit and Delete Button on on Post Overview page
+                {// Do only show the edit and delete button on on Post Overview page
                   post && props.id === undefined &&
                   <Button.Group size="mini">
                     <AddAndEditPost

@@ -3,24 +3,15 @@ import PropTypes from 'prop-types'
 import { Grid, Menu, Button, Dropdown } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { Post } from './Post'
-import { sortPosts } from '../actions'
+import { sortPosts, updateCurrentCategory } from '../actions'
 import AddAndEditPost from './AddAndEditPost'
 import PostsMenu from './PostsMenu'
 
 class Posts extends Component {
 
-  /*
-    TODO: Why is Ordering made with redux store and why is filtering made with state in this component? Is there any specific reason for that?
-    * this needs a reason or refactoring has to be made
-  */
-
-  state = {
-    activeCategoryItem: 'All categories'
-  }
-
   handleCategoryItemClick = (e, { name }) => {
     this.props.history.push( name )
-    this.setState({activeCategoryItem: name})
+    this.props.dispatch(updateCurrentCategory( name ))
   }
 
   handleOrderByItemClick = (e, { name }) => {
@@ -28,14 +19,15 @@ class Posts extends Component {
   }
 
   componentDidMount(){
-    if(this.props.match.params.category)
-      this.setState({activeCategoryItem: this.props.match.params.category})
+    const name = this.props.match.params.category
+    if (name)
+      this.props.dispatch(updateCurrentCategory( name ))
   }
 
   render() {
 
     const { sortValue } = this.props.posts
-    const { activeCategoryItem } = this.state
+    const { activeCategoryItem } = this.props.categories
 
     return (
       <Grid padded>
@@ -44,17 +36,11 @@ class Posts extends Component {
             <PostsMenu
               handleCategoryItemClick={this.handleCategoryItemClick}
               handleOrderByItemClick={this.handleOrderByItemClick}
-              category={this.props.match.params.category}
-              activeCategoryItem={activeCategoryItem}
             />
           </Grid.Column>
         </Grid.Row>
         <Grid.Row>
           <Grid.Column width={16}>
-
-            {
-              // TODO: Maybe it's better to Listen to the category param from react-router-dom
-            }
 
             { this.props.posts.items.filter((post) => (activeCategoryItem === "All categories" || post.category===activeCategoryItem)).map((post) => (
               <Post key={post.id} post={post} comments={this.props.comments.items.filter((comment) => (comment.parentId === post.id))}/>
@@ -71,7 +57,6 @@ Posts.propTypes = {
   categories: PropTypes.object.isRequired,
   posts: PropTypes.object.isRequired,
   comments: PropTypes.object.isRequired,
-  match: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired
 }

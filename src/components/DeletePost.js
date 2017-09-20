@@ -7,7 +7,6 @@ import { connect } from 'react-redux'
 import { deletePost } from '../actions'
 import { withRouter } from "react-router-dom";
 
-
 class DeletePost extends Component {
 
   handleDelete = () => {
