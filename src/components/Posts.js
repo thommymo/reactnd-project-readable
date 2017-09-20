@@ -24,6 +24,9 @@ class Posts extends Component {
   }
 
   render() {
+    if(this.props.errors && this.props.errors.hasError)
+      throw new Error(this.props.errors.error)
+
     const { activeCategoryItem } = this.props.categories
 
     return (
@@ -59,7 +62,7 @@ Posts.propTypes = {
 }
 
 function mapStateToProps (store) {
-  return {categories: store.categories, posts: store.posts, comments: store.comments, dispatch: store.dispatch }
+  return {categories: store.categories, posts: store.posts, comments: store.comments, dispatch: store.dispatch, catchError: store.catchError }
 }
 
 export default connect(mapStateToProps)(Posts);

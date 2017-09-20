@@ -13,6 +13,7 @@ export const REMOVE_POST = 'REMOVE_POST'
 export const ADD_POST = 'ADD_POST'
 export const UPDATE_EDITED_POST = 'UPDATE_EDITED_POST'
 export const UPDATE_CURRENT_CATEGORY = 'UPDATE_CURRENT_CATEGORY'
+export const SET_ERROR = 'SET_ERROR'
 
 
 export function updateCurrentCategory (category) {
@@ -120,6 +121,14 @@ export function sortPosts(sortValue, sortOrder){
   }
 }
 
+export function setError(reason, error){
+  return {
+    type: SET_ERROR,
+    reason: reason,
+    error: error
+  }
+}
+
 //these variables are for communicating with the API
 
 const api = process.env.REACT_APP_CONTACTS_API_URL || 'http://localhost:3001'
@@ -131,6 +140,9 @@ const headers = {
  'Authorization': token,
  'Content-Type': 'application/json'
 }
+
+
+// UUID Generator copied from https://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
 
 function uuidv4() {
   return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
@@ -167,7 +179,7 @@ export function fetchCategories() {
         // any errors in the dispatch and resulting render,
         // causing an loop of 'Unexpected batch number' errors.
         // https://github.com/facebook/react/issues/6895
-        error => console.log('An error occured.', error)
+        error => dispatch(setError("fetching categories", error))
       )
       .then(json =>
         // We can dispatch many times!
@@ -182,9 +194,10 @@ export function fetchPosts(postid = undefined) {
       dispatch(requestPosts())
 
       fetch(`${api}/posts`, { method: 'GET', headers })
+
         .then(
           response => response.json(),
-          error => console.log('An error occured.', error)
+          error => dispatch(setError("fetching posts", error))
         )
         .then(json => dispatch(receivePosts(json)))
     }
@@ -197,7 +210,7 @@ export function fetchPostsWithComments(postid = undefined) {
       fetch(`${api}/posts`, { method: 'GET', headers })
         .then(
           response => response.json(),
-          error => console.log('An error occured.', error)
+          error => dispatch(setError("fetching posts and comments", error))
         )
         .then(json => {
           dispatch(receivePosts(json))
@@ -214,7 +227,7 @@ export function fetchComments(id) {
     fetch(`${api}/posts/${id}/comments`, { method: 'GET', headers })
       .then(
         response => response.json(),
-        error => console.log('An error occured.', error)
+        error => dispatch(setError("fetching comments", error))
       )
       .then(json => dispatch(receiveComments(id, json)))
   }
@@ -234,7 +247,10 @@ export function saveComment(parentId, body, author){
         body: JSON.stringify(data),
         method: 'POST',
       })
-      .then((res) => (res.json()))
+      .then(
+        response => response.json(),
+        error => dispatch(setError("saving your comment", error))
+      )
       .then((json) => dispatch(addNewComment(json)))
     }
 }
@@ -250,7 +266,10 @@ export function updateComment(id, parentId, body, author){
         body: JSON.stringify(data),
         method: 'PUT',
       })
-      .then((res) => (res.json()))
+      .then(
+        response => response.json(),
+        error => dispatch(setError("updating your comment", error))
+      )
       .then(json => dispatch(updateEditedComment(json)))
     }
 }
@@ -267,7 +286,10 @@ export function updatePost(id, title, body, category, author){
         body: JSON.stringify(data),
         method: 'PUT',
       })
-      .then((res) => (res.json()))
+      .then(
+        response => response.json(),
+        error => dispatch(setError("updating your post", error))
+      )
       .then((json) => dispatch(updateEditedPost(json)))
     }
 }
@@ -286,7 +308,10 @@ export function savePost(title, body, category, author){
         body: JSON.stringify(data),
         method: 'POST',
       })
-      .then((res) => (res.json()))
+      .then(
+        response => response.json(),
+        error => dispatch(setError("saving your post", error))
+      )
       .then((json) => dispatch(addPost(json)))
     }
 }
@@ -296,7 +321,10 @@ export function deletePost(id){
         headers ,
         method: 'DELETE',
       })
-      .then((res) => (res.json()))
+      .then(
+        response => response.json(),
+        error => dispatch(setError("deleting your post", error))
+      )
       .then((json) => dispatch(removePost(json)))
     }
 }
@@ -306,7 +334,10 @@ export function deleteComment(id, parentId){
         headers ,
         method: 'DELETE',
       })
-      .then((res) => (res.json()))
+      .then(
+        response => response.json(),
+        error => dispatch(setError("deleting your comment", error))
+      )
       .then((json) => dispatch(removeComment(json)))
     }
 }
@@ -322,7 +353,10 @@ export function saveVote(id, vote, posttype){
           body: JSON.stringify(data),
           method: 'POST',
         })
-        .then((res) => (res.json()))
+        .then(
+          response => response.json(),
+          error => dispatch(setError("saving your vote", error))
+        )
         .then(() => dispatch(changeVoteScore(id, vote)))
       }
     }

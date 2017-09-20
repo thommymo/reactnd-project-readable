@@ -7,6 +7,7 @@ import {
 } from 'semantic-ui-react'
 import { fetchCategories, fetchPostsWithComments } from '../actions'
 import { Route, withRouter } from 'react-router-dom';
+import ErrorHandling from './ErrorHandling'
 
 class App extends Component {
 
@@ -18,9 +19,11 @@ class App extends Component {
   render() {
     return (
       <Container>
-        <Route  path="/" exact component={Posts} />
-        <Route  path="/:category" exact component={Posts} />
-        <Route  path="/:category/:id" exact component={PostDetail}/>
+        <ErrorHandling>
+          <Route  path="/" exact component={Posts} />
+          <Route  path="/:category" exact component={Posts} />
+          <Route  path="/:category/:id" exact component={PostDetail}/>
+        </ErrorHandling>
       </Container>
     );
   }

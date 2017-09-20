@@ -15,7 +15,8 @@ import {
   REMOVE_POST,
   ADD_POST,
   UPDATE_EDITED_POST,
-  UPDATE_CURRENT_CATEGORY
+  UPDATE_CURRENT_CATEGORY,
+  SET_ERROR
 } from '../actions'
 
 const initialCategoriesState = {
@@ -104,6 +105,28 @@ function posts (state = initialPostsState, action) {
       return state
   }
 }
+
+
+const initialErrorsState = {
+  hasError: false,
+  reason: "",
+  error: {}
+}
+
+function errors (state = initialErrorsState, action){
+  switch(action.type){
+    case SET_ERROR:
+      return Object.assign({}, state, {
+        hasError: true,
+        reason: action.reason,
+        error: action.error
+      })
+
+    default:
+      return state
+  }
+}
+
 const initialCommentsState = {
   isFetching: false,
   items: []
@@ -156,4 +179,5 @@ export default combineReducers({
   categories,
   posts,
   comments,
+  errors
 })

@@ -6,6 +6,7 @@ import AddAndEditPost from './AddAndEditPost'
 
 
 function PostsMenu (props) {
+  
   return(
     <Menu size='small'>
       <Menu.Item>
