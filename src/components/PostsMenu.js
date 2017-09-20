@@ -1,9 +1,7 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
-import { Grid, Menu, Button, Dropdown } from 'semantic-ui-react'
+import { Menu, Button, Dropdown } from 'semantic-ui-react'
 import { connect } from 'react-redux'
-import { Post } from './Post'
-import { sortPosts } from '../actions'
 import AddAndEditPost from './AddAndEditPost'
 
 

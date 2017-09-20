@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Grid, Menu, Button, Dropdown } from 'semantic-ui-react'
+import { Grid } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { Post } from './Post'
 import { sortPosts, updateCurrentCategory } from '../actions'
-import AddAndEditPost from './AddAndEditPost'
 import PostsMenu from './PostsMenu'
 
 class Posts extends Component {
@@ -25,8 +24,6 @@ class Posts extends Component {
   }
 
   render() {
-
-    const { sortValue } = this.props.posts
     const { activeCategoryItem } = this.props.categories
 
     return (
