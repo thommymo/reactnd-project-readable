@@ -35,7 +35,7 @@ npm start
 * [React](https://facebook.github.io/react/) - The web framework used
 * [React Router](https://reacttraining.com/react-router/) - Navigational components
 * [Redux](http://redux.js.org/) - The state container
-* [Maven](https://react.semantic-ui.com) - Semantic UI React for UI
+* [Semantic UI](https://react.semantic-ui.com) - Semantic UI React for UI
 
 ## Authors
 
