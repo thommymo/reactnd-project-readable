@@ -1,6 +1,6 @@
 # My Project Readable for Udacity React Nanodegree
 
-This project was created during the Udacity React Nanodegree in September 2017. It was created for learning reactjs, react-redux, react-router and how these elements work together.
+This project was created during the [Udacity](https://udacity.com/) React Nanodegree in September 2017. It was created for learning reactjs, react-redux, react-router and how these elements work together.
 
 With the webapp you can create posts, create comments and vote for posts and comments.
 
